@@ -1,0 +1,55 @@
+name: converse
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  get:
+    ^4.6.6
+    # date
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/icons/
+    - assets/Sound_Horizon.mp3
+    - assets/audio_mixing/Agora.io-Interactions.mp3
+    - assets/agora-logo.png
+    - assets/dang.mp3
+    - assets/ding.mp3
+    - assets/gif.gif
+    - assets/jpg.jpg
+
+  fonts:
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/Avenir-Book.ttf
+          weight: 400
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
+    - family: Iconfont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
