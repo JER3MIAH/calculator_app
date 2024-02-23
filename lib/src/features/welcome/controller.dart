@@ -1,4 +1,5 @@
 import 'package:converse/src/features/welcome/state.dart';
+import 'package:converse/src/shared/routes/names.dart';
 import 'package:get/get.dart';
 
 class WelcomeController extends GetxController {
@@ -8,7 +9,8 @@ class WelcomeController extends GetxController {
 
   @override
   void onReady() {
-    print(' WelcomeController ');
+    Future.delayed(const Duration(milliseconds: 3000),
+        () => Get.offAllNamed(AppRoutes.Message));
     super.onReady();
   }
 }

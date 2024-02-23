@@ -1,3 +1,5 @@
+import 'package:converse/src/features/message/message.dart';
+import 'package:converse/src/shared/middlewares/middlewares.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../features/welcome/welcome.dart';
@@ -7,7 +9,7 @@ class AppPages {
   static const initial = AppRoutes.INITIAL;
   static final RouteObserver<Route> observer = RouteObservers();
   static List<String> history = [];
-  
+
   static final List<GetPage> routes = [
     // On Start of the app
     GetPage(
@@ -39,10 +41,15 @@ class AppPages {
     // GetPage(name: AppRoutes.SendCode, page: () => SendCodePage(), binding: SendCodeBinding()),
     // // 首页
     // GetPage(name: AppRoutes.Contact, page: () => ContactPage(), binding: ContactBinding()),
-    // //消息
-    // GetPage(name: AppRoutes.Message, page: () => MessagePage(), binding: MessageBinding(),middlewares: [
-    //    RouteAuthMiddleware(priority: 1),
-    //  ],),
+    //消息
+    GetPage(
+      name: AppRoutes.Message,
+      page: () => const MessageScreen(),
+      binding: MessageBinding(),
+      middlewares: [
+        RouteAuthMiddleware(priority: 1),
+      ],
+    ),
     // //我的
     // GetPage(name: AppRoutes.Profile, page: () => ProfilePage(), binding: ProfileBinding()),
     // //聊天详情

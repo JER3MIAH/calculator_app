@@ -12,6 +12,7 @@ class Country {
   });
 
   @override
+  // ignore: non_nullable_equals_parameter
   bool operator ==(Object? other) =>
       identical(this, other) ||
           other is Country &&

@@ -1,11 +1,11 @@
-import 'package:converse/src/features/welcome/welcome.dart';
+import 'package:converse/src/features/message/message.dart';
 import 'package:converse/src/shared/values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class WelcomeScreen extends GetView<WelcomeController> {
-  const WelcomeScreen({super.key});
+class MessageScreen extends GetView<MessageController> {
+  const MessageScreen({super.key});
 
   Widget _buildPageHeadTitle(String title) {
     return Container(
@@ -27,10 +27,10 @@ class WelcomeScreen extends GetView<WelcomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryElement,
-      body: Container(
+      body: SizedBox(
         width: 360.w,
         height: 780.h,
-        child: _buildPageHeadTitle(controller.title),
+        child: _buildPageHeadTitle('Message page'),
       ),
     );
   }
