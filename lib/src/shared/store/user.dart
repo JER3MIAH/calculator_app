@@ -10,9 +10,9 @@ class UserStore extends GetxController {
 
   // 是否登录
   final _isLogin = false.obs;
-  // 令牌 token
+  // token
   String token = '';
-  // 用户 profile
+  // profile
   final _profile = UserItem().obs;
 
   bool get isLogin => _isLogin.value;

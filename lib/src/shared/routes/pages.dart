@@ -1,3 +1,4 @@
+import 'package:converse/src/features/auth/sign_in/sign_in.dart';
 import 'package:converse/src/features/message/message.dart';
 import 'package:converse/src/shared/middlewares/middlewares.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,11 @@ class AppPages {
       page: () => const WelcomeScreen(),
       binding: WelcomeBinding(),
     ),
-    // GetPage(
-    //   name: AppRoutes.SIGN_IN,
-    //   page: () => SignInPage(),
-    //   binding: SignInBinding(),
-    // ),
+    GetPage(
+      name: AppRoutes.SIGN_IN,
+      page: () => const SignInScreen(),
+      binding: SignInBinding(),
+    ),
 
     // 需要登录
     // GetPage(
