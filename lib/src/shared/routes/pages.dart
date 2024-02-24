@@ -1,5 +1,6 @@
 import 'package:converse/src/features/auth/sign_in/sign_in.dart';
 import 'package:converse/src/features/message/message.dart';
+import 'package:converse/src/features/profile/profile.dart';
 import 'package:converse/src/shared/middlewares/middlewares.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,7 +43,7 @@ class AppPages {
     // GetPage(name: AppRoutes.SendCode, page: () => SendCodePage(), binding: SendCodeBinding()),
     // // 首页
     // GetPage(name: AppRoutes.Contact, page: () => ContactPage(), binding: ContactBinding()),
-    //消息
+    //* Message screen
     GetPage(
       name: AppRoutes.Message,
       page: () => const MessageScreen(),
@@ -51,8 +52,11 @@ class AppPages {
         RouteAuthMiddleware(priority: 1),
       ],
     ),
-    // //我的
-    // GetPage(name: AppRoutes.Profile, page: () => ProfilePage(), binding: ProfileBinding()),
+    //* Profile Screen
+    GetPage(
+        name: AppRoutes.Profile,
+        page: () => const ProfileScreen(),
+        binding: ProfileBinding()),
     // //聊天详情
     // GetPage(name: AppRoutes.Chat, page: () => ChatPage(), binding: ChatBinding()),
 

@@ -1,10 +1,10 @@
-import 'package:converse/src/features/message/state.dart';
+import 'package:converse/src/features/profile/state.dart';
 import 'package:converse/src/shared/routes/names.dart';
 import 'package:get/get.dart';
 
-class MessageController extends GetxController {
-  MessageController();
-  final state = MessageState();
+class ProfileController extends GetxController {
+  ProfileController();
+  final state = ProfileState();
 
   void goToProfile() async {
     await Get.toNamed(AppRoutes.Profile);
