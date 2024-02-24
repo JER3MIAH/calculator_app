@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-enum LoginTypye { google, facebook, apple, phone }
+enum LoginType { google, facebook, apple, phone }
 
 class SignInScreen extends GetView<SignInController> {
   const SignInScreen({super.key});
@@ -17,11 +17,11 @@ class SignInScreen extends GetView<SignInController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildLogo(),
-          _buildThirdPartyLogin(LoginTypye.google),
-          _buildThirdPartyLogin(LoginTypye.facebook),
-          _buildThirdPartyLogin(LoginTypye.apple),
+          _buildThirdPartyLogin(LoginType.google),
+          _buildThirdPartyLogin(LoginType.facebook),
+          _buildThirdPartyLogin(LoginType.apple),
           _buildOrWidget(),
-          _buildThirdPartyLogin(LoginTypye.phone),
+          _buildThirdPartyLogin(LoginType.phone),
           _buildSignUpText(),
         ],
       ),
@@ -43,48 +43,59 @@ class SignInScreen extends GetView<SignInController> {
   }
 
   Widget _buildThirdPartyLogin(
-    LoginTypye loginType,
+    LoginType loginType,
   ) {
-    return Container(
-      width: 295.w,
-      height: 44.h,
-      padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
-      margin: EdgeInsets.only(bottom: 8.h),
-      decoration: BoxDecoration(
-        color: AppColors.primaryBackground,
-        borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          loginType == LoginTypye.phone
-              ? const SizedBox.shrink()
-              : Image.asset(
-                  'assets/icons/${loginType == LoginTypye.google ? 'google.png' : loginType == LoginTypye.facebook ? 'facebook.png' : 'apple.png'}',
-                  // scale: 5,
-                ),
-          Text(
-            loginType == LoginTypye.google
-                ? 'Sign in with Google'
-                : loginType == LoginTypye.facebook
-                    ? 'Sign in with Facebook'
-                    : loginType == LoginTypye.apple
-                        ? 'Sign in with Apple'
-                        : 'Sign in with phone number',
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.normal,
+    return GestureDetector(
+      onTap: () {
+        loginType == LoginType.google
+            ? controller.handleSignIn(LoginType.google)
+            : loginType == LoginType.facebook
+                ? debugPrint('login with facebook')
+                : loginType == LoginType.apple
+                    ? debugPrint('login with apple')
+                    : debugPrint('login with phone number');
+      },
+      child: Container(
+        width: 295.w,
+        height: 44.h,
+        padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
+        margin: EdgeInsets.only(bottom: 8.h),
+        decoration: BoxDecoration(
+          color: AppColors.primaryBackground,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 2,
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            loginType == LoginType.phone
+                ? const SizedBox.shrink()
+                : Image.asset(
+                    'assets/icons/${loginType == LoginType.google ? 'google.png' : loginType == LoginType.facebook ? 'facebook.png' : 'apple.png'}',
+                    // scale: 5,
+                  ),
+            Text(
+              loginType == LoginType.google
+                  ? 'Sign in with Google'
+                  : loginType == LoginType.facebook
+                      ? 'Sign in with Facebook'
+                      : loginType == LoginType.apple
+                          ? 'Sign in with Apple'
+                          : 'Sign in with phone number',
+              style: TextStyle(
+                color: AppColors.primaryText,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -117,29 +128,34 @@ class SignInScreen extends GetView<SignInController> {
   Widget _buildSignUpText() {
     return Container(
       margin: EdgeInsets.only(top: 40.h),
-      child: Column(
-        children: [
-          Text(
-            'Already have an account?',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontWeight: FontWeight.normal,
-              fontSize: 12.sp,
-            ),
-          ),
-          GestureDetector(
-            child: Text(
-              'Sign up here',
+      child: GestureDetector(
+        onTap: () {
+          print('Yoooooooo');
+        },
+        child: Column(
+          children: [
+            Text(
+              'Already have an account?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppColors.primaryElement,
+                color: AppColors.primaryText,
                 fontWeight: FontWeight.normal,
                 fontSize: 12.sp,
               ),
             ),
-          ),
-        ],
+            GestureDetector(
+              child: Text(
+                'Sign up here',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.primaryElement,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12.sp,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
