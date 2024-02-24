@@ -4,8 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+enum LoginTypye { google, facebook, apple, phone }
+
 class SignInScreen extends GetView<SignInController> {
   const SignInScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.primarySecondaryBackground,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _buildLogo(),
+          _buildThirdPartyLogin(LoginTypye.google),
+          _buildThirdPartyLogin(LoginTypye.facebook),
+          _buildThirdPartyLogin(LoginTypye.apple),
+          _buildOrWidget(),
+          _buildThirdPartyLogin(LoginTypye.phone),
+          _buildSignUpText(),
+        ],
+      ),
+    );
+  }
 
   Widget _buildLogo() {
     return Container(
@@ -21,7 +42,9 @@ class SignInScreen extends GetView<SignInController> {
     );
   }
 
-  Widget _buildThirdPartyLogin(String loginType) {
+  Widget _buildThirdPartyLogin(
+    LoginTypye loginType,
+  ) {
     return Container(
       width: 295.w,
       height: 44.h,
@@ -41,12 +64,20 @@ class SignInScreen extends GetView<SignInController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Image.asset(
-            'assets/icons/google.png',
-            // scale: 5,
-          ),
+          loginType == LoginTypye.phone
+              ? const SizedBox.shrink()
+              : Image.asset(
+                  'assets/icons/${loginType == LoginTypye.google ? 'google.png' : loginType == LoginTypye.facebook ? 'facebook.png' : 'apple.png'}',
+                  // scale: 5,
+                ),
           Text(
-            'Sign in with Google',
+            loginType == LoginTypye.google
+                ? 'Sign in with Google'
+                : loginType == LoginTypye.facebook
+                    ? 'Sign in with Facebook'
+                    : loginType == LoginTypye.apple
+                        ? 'Sign in with Apple'
+                        : 'Sign in with phone number',
             style: TextStyle(
               color: AppColors.primaryText,
               fontSize: 14.sp,
@@ -58,17 +89,56 @@ class SignInScreen extends GetView<SignInController> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primarySecondaryBackground,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+  Widget _buildOrWidget() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 30.h),
+      child: Row(
         children: [
-          _buildLogo(),
-          _buildThirdPartyLogin('Google'),
-          _buildThirdPartyLogin('Facebook'),
-          _buildThirdPartyLogin('Gmail'),
+          Expanded(
+            child: Divider(
+              indent: 50,
+              height: 2.h,
+              color: AppColors.primarySecondaryElementText,
+            ),
+          ),
+          const Text('   or   '),
+          Expanded(
+            child: Divider(
+              endIndent: 50,
+              height: 2.h,
+              color: AppColors.primarySecondaryElementText,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignUpText() {
+    return Container(
+      margin: EdgeInsets.only(top: 40.h),
+      child: Column(
+        children: [
+          Text(
+            'Already have an account?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontWeight: FontWeight.normal,
+              fontSize: 12.sp,
+            ),
+          ),
+          GestureDetector(
+            child: Text(
+              'Sign up here',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.primaryElement,
+                fontWeight: FontWeight.normal,
+                fontSize: 12.sp,
+              ),
+            ),
+          ),
         ],
       ),
     );
