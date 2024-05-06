@@ -7,3 +7,6 @@ export 'app_text.dart';
 export 'app_textfields.dart';
 export 'bounce_in_animation.dart';
 export 'sizedbox.dart';
+export 'icon_filler.dart';
+export 'back_and_appicon.dart';
+export 'app_icon_and_text.dart';

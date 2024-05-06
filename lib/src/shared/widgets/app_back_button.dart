@@ -1,6 +1,5 @@
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/shared/shared.dart';
-import 'package:converse/src/shared/widgets/app_inkwell.dart';
 import 'package:flutter/material.dart';
 
 class AppBackButton extends StatelessWidget {
