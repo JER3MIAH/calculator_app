@@ -1,5 +1,5 @@
 name: converse
-description: "A new Flutter project."
+description: "A simple chat app"
 
 publish_to: "none"
 
@@ -18,13 +18,31 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
   google_fonts: ^6.2.1
-  flutter_hooks_bloc: ^0.17.0
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.13.1
+  # flutter_native_splash: ^2.3.13
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/pngs/app-icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+
+# flutter_native_splash:
+#   background_image: assets/pngs/background.png
+#   android: true
+#   ios: true
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/pngs/
+    - assets/svgs/
