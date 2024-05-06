@@ -1,6 +1,5 @@
 import 'package:converse/src/features/home/presentation/drawer/app_drawer.dart';
 import 'package:converse/src/shared/shared.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,10 +17,10 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text('Home'),
       ),
-      drawer: AppDrawer()
+      drawer: const AppDrawer()
     );
   }
 }
