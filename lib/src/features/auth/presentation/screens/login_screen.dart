@@ -83,9 +83,11 @@ class LoginScreen extends HookWidget {
             title: 'Log in',
             // isLoading: viewmodel.isLoading,
             onTap: () async {
-              if (formKey.currentState!.validate()) {
-                //TODO;
-              }
+              // if (formKey.currentState!.validate()) {
+              //   //TODO;
+              // }
+              //? authenticate
+              AppNavigator.replaceAllNamed(HomeRoutes.home);
             },
             buttonColor: theme.primary,
             // : theme.secondary.withOpacity(0.1),
