@@ -57,8 +57,10 @@ class SingupProvider extends ChangeNotifier {
     isLoading = true;
     try {
       userCredential = await authService.signUp(username, email, password);
+      isLoading = false;
       return true;
     } catch (e) {
+      isLoading = false;
       errorMessage = e.toString();
       return false;
     }

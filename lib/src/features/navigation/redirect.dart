@@ -6,6 +6,7 @@ class AuthMiddleware extends GetMiddleware {
   @override
   Future<GetNavConfig?> redirectDelegate(GetNavConfig route) async {
     final user = FirebaseAuth.instance.currentUser;
+    //Todo: fix redirect 
 
     if (user == null) {
       //? If User is not logged in, redirect to login page

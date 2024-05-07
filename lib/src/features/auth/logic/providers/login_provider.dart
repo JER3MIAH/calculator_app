@@ -47,9 +47,12 @@ class LoginProvider extends ChangeNotifier {
     isLoading = true;
     try {
       userCredential = await authService.logIn(email, password);
+      isLoading = false;
       return true;
     } catch (e) {
+      isLoading = false;
       errorMessage = e.toString();
+
       return false;
     }
   }
@@ -58,9 +61,11 @@ class LoginProvider extends ChangeNotifier {
     isLoading = true;
     try {
       await authService.logout();
+      isLoading = false;
       return true;
     } catch (e) {
       errorMessage = e.toString();
+      isLoading = false;
       return false;
     }
   }

@@ -1,13 +1,17 @@
+import 'package:converse/src/features/auth/logic/providers/login_provider.dart';
 import 'package:converse/src/features/home/presentation/widgets/drawer_tile.dart';
+import 'package:converse/src/features/navigation/app_navigator.dart';
+import 'package:converse/src/features/navigation/routes.dart';
 import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +70,10 @@ class AppDrawer extends StatelessWidget {
           AppDrawerTile(
             title: 'Logout',
             icon: Icons.logout,
-            onTap: () {},
+            onTap: () async {
+              await ref.read(loginProvider.notifier).logout();
+              AppNavigator.replaceNamed(AuthRoutes.login);
+            },
           ),
         ],
       ),
