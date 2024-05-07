@@ -1,20 +1,24 @@
+import 'package:converse/src/features/auth/logic/providers/login_provider.dart';
 import 'package:converse/src/features/auth/presentation/widgets/lined_up_text.dart';
 import 'package:converse/src/features/auth/presentation/widgets/start_aligned_text.dart';
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
 import 'package:converse/src/shared/shared.dart';
+import 'package:converse/src/shared/widgets/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LoginScreen extends HookWidget {
+class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final theme = Theme.of(context).colorScheme;
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final loginProvidr = ref.watch(loginProvider);
 
     return Scaffold(
       body: Form(
@@ -81,13 +85,20 @@ class LoginScreen extends HookWidget {
         children: [
           AppButton(
             title: 'Log in',
-            // isLoading: viewmodel.isLoading,
+            isLoading: loginProvidr.isLoading,
             onTap: () async {
-              // if (formKey.currentState!.validate()) {
-              // 
-              // }
-              //? authenticate
-              AppNavigator.replaceAllNamed(HomeRoutes.home);
+              if (formKey.currentState!.validate()) {
+                final isSuccessful =
+                    await ref.read(loginProvider.notifier).login(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+                if (isSuccessful) {
+                  AppNavigator.replaceAllNamed(HomeRoutes.home);
+                } else {
+                  AppSnackBar.showSnackbar(message: loginProvidr.errorMessage);
+                }
+              }
             },
             buttonColor: theme.primary,
             // : theme.secondary.withOpacity(0.1),

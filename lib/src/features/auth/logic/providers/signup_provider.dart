@@ -1,11 +1,18 @@
+import 'package:converse/src/features/auth/logic/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final signUpProvider = ChangeNotifierProvider((ref) {
-  return SingupProvider();
+  return SingupProvider(authService: AuthService());
 });
 
 class SingupProvider extends ChangeNotifier {
+  final AuthService authService;
+  SingupProvider({
+    required this.authService,
+  });
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   set isLoading(bool value) {
@@ -13,11 +20,12 @@ class SingupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String fullName = '';
-  String number = '';
+  String userName = '';
   String email = '';
   String password = '';
   String errorMessage = '';
+
+  UserCredential? userCredential;
 
   bool _buttonEnabled = false;
   bool get buttonEnabled => _buttonEnabled;
@@ -27,14 +35,14 @@ class SingupProvider extends ChangeNotifier {
   }
 
   void onInputChanged({
-    required String firstName,
+    required String userName,
     required String email,
-    required String phoneNumber,
     required String password,
+    required String confirmPassword,
   }) {
-    if (firstName.isNotEmpty &&
+    if (userName.isNotEmpty &&
         email.isNotEmpty &&
-        phoneNumber.isNotEmpty &&
+        confirmPassword.isNotEmpty &&
         password.isNotEmpty) {
       buttonEnabled = true;
     } else {
@@ -42,9 +50,22 @@ class SingupProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> signUp(
+      {required String username,
+      required String email,
+      required String password}) async {
+    isLoading = true;
+    try {
+      userCredential = await authService.signUp(username, email, password);
+      return true;
+    } catch (e) {
+      errorMessage = e.toString();
+      return false;
+    }
+  }
+
   void disposeValues() {
-    fullName = '';
-    number = '';
+    userName = '';
     email = '';
     password = '';
     errorMessage = '';

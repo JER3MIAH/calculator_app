@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(
       const Duration(milliseconds: 3200),
-      () => AppNavigator.replaceAllNamed(AuthRoutes.signUp),
+      () => AppNavigator.replaceAllNamed(HomeRoutes.home),
     );
   }
 

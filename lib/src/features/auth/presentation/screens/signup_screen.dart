@@ -2,6 +2,7 @@ import 'package:converse/src/features/auth/logic/providers/signup_provider.dart'
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
 import 'package:converse/src/shared/shared.dart';
+import 'package:converse/src/shared/widgets/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,9 +27,9 @@ class SignUpScreen extends HookConsumerWidget {
         key: formKey,
         onChanged: () {
           signupProvider.onInputChanged(
-            firstName: userNameController.text.trim(),
+            userName: userNameController.text.trim(),
             email: emailController.text.trim(),
-            phoneNumber: confirmPasswordController.text.trim(),
+            confirmPassword: confirmPasswordController.text.trim(),
             password: passwordController.text.trim(),
           );
         },
@@ -98,13 +99,24 @@ class SignUpScreen extends HookConsumerWidget {
                 title: 'Sign up',
                 isLoading: signupProvider.isLoading,
                 onTap: () async {
-                  //? authenticate
-                  AppNavigator.replaceAllNamed(HomeRoutes.home);
+                  if (formKey.currentState!.validate()) {
+                    final isSuccessful =
+                        await ref.read(signUpProvider.notifier).signUp(
+                              username: userNameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                    if (isSuccessful) {
+                      AppNavigator.replaceAllNamed(HomeRoutes.home);
+                    } else {
+                      AppSnackBar.showSnackbar(
+                          message: signupProvider.errorMessage);
+                    }
+                  }
                 },
-                buttonColor: theme.primary,
-                //  signupViewmodel.buttonEnabled
-                //     ? theme.primary
-                //     : theme.secondary,
+                buttonColor: signupProvider.buttonEnabled
+                    ? theme.primary
+                    : theme.secondary,
               ),
               YBox(27.h),
               LinedUpText(
