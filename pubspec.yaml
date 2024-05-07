@@ -24,6 +24,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   dio: ^5.4.3+1
   get_it: ^7.7.0
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -31,7 +32,7 @@ dev_dependencies:
 
   flutter_lints: ^3.0.0
   flutter_launcher_icons: ^0.13.1
-  # flutter_native_splash: ^2.3.13
+  flutter_native_splash: ^2.3.13
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -40,10 +41,10 @@ flutter_launcher_icons:
   min_sdk_android: 21
   remove_alpha_ios: true
 
-# flutter_native_splash:
-#   background_image: assets/pngs/background.png
-#   android: true
-#   ios: true
+flutter_native_splash:
+  background_image: assets/pngs/background.png
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true
