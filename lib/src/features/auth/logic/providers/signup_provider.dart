@@ -1,10 +1,11 @@
+import 'package:converse/src/features/auth/logic/providers/auth_service_provider.dart';
 import 'package:converse/src/features/auth/logic/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final signUpProvider = ChangeNotifierProvider((ref) {
-  return SingupProvider(authService: AuthService());
+  return SingupProvider(authService: ref.read(authServiceProvider));
 });
 
 class SingupProvider extends ChangeNotifier {

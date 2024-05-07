@@ -1,3 +1,4 @@
+import 'package:converse/src/features/auth/logic/providers/auth_service_provider.dart';
 import 'package:converse/src/features/auth/logic/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final loginProvider = ChangeNotifierProvider((ref) => LoginProvider(
-      authService: AuthService(),
+      authService: ref.read(authServiceProvider),
     ));
 
 class LoginProvider extends ChangeNotifier {
