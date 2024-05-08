@@ -2,6 +2,7 @@ import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/home/presentation/widgets/drawer_tile.dart';
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
+import 'package:converse/src/features/theme/theme_provider.dart';
 import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class AppDrawer extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final theme = Theme.of(context).colorScheme;
     final userProv = ref.watch(userProvider);
+    final themeProv = ref.watch(themeProvider);
 
     return Drawer(
       child: Column(
@@ -37,8 +39,12 @@ class AppDrawer extends ConsumerWidget {
                       ),
                     ),
                     AppInkWell(
-                      onTap: () {},
-                      child: const Icon(CupertinoIcons.moon),
+                      onTap: () {
+                        ref.read(themeProvider.notifier).toggleTheme();
+                      },
+                      child: themeProv.isDarkMode
+                          ? const Icon(CupertinoIcons.sun_haze)
+                          : const Icon(CupertinoIcons.moon),
                     ),
                   ],
                 ),

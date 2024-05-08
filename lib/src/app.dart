@@ -1,14 +1,18 @@
 import 'package:converse/src/features/navigation/nav.dart';
+import 'package:converse/src/features/theme/theme_provider.dart';
 import 'package:converse/src/shared/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final themeProv = ref.watch(themeProvider);
+
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Converse',
-          theme: appTheme,
+          theme: themeProv.isDarkMode ? darkTheme : lightTheme,
           initialRoute: AppPages.initial,
           getPages: AppPages.routes,
         );
