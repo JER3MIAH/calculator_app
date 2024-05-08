@@ -38,14 +38,19 @@ class MessageListView extends ConsumerWidget {
             final chat = chats[index];
             bool isCurrentUser = chat.sender.id == userProv.user.id;
 
-            return Container(
-              alignment:
-                  isCurrentUser ? Alignment.centerRight : Alignment.centerRight,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(chat.message),
+            return Row(
+              mainAxisAlignment: isCurrentUser
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(chat.message),
+                ),
+              ],
             );
           },
         );
