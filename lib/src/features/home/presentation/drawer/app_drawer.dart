@@ -1,4 +1,5 @@
 import 'package:converse/src/features/auth/logic/providers/login_provider.dart';
+import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/home/presentation/widgets/drawer_tile.dart';
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
@@ -13,6 +14,7 @@ class AppDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final theme = Theme.of(context).colorScheme;
+    final userProv = ref.watch(userProvider);
 
     return Drawer(
       child: Column(
@@ -43,7 +45,7 @@ class AppDrawer extends ConsumerWidget {
                 ),
                 YBox(10.h),
                 Text(
-                  'Jeremiah',
+                  userProv.user.username,
                   style: TextStyle(
                     fontSize: 18.sp,
                   ),

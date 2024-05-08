@@ -11,6 +11,11 @@ class UserModel {
     required this.email,
   });
 
+  UserModel.empty()
+      : id = '',
+        username = '',
+        email = '';
+
   UserModel copyWith({
     String? id,
     String? username,

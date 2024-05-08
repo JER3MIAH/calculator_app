@@ -6,18 +6,34 @@ import 'package:converse/src/core/data/models/user_model.dart';
 class DatabaseService {
   final _db = FirebaseFirestore.instance;
 
-  //? This function adds user info to the database if it doesnt already exist
-  void saveUserInfo(String id, String username, String email) async {
+  Future<UserModel> retrieveUserInfo(String email) async {
     try {
-      _db.collection('users').doc(id).set(
+      QuerySnapshot response =
+          await _db.collection('users').where('email', isEqualTo: email).get();
+
+      return UserModel.fromMap(
+          (response.docs[0].data() as Map<String, dynamic>));
+    } catch (e) {
+      log('Failed to retrieve user info: $e');
+      throw e.toString();
+    }
+  }
+
+  Future<UserModel> addUserToDataBase(
+      String id, String username, String email) async {
+    try {
+      DocumentReference response = await _db.collection('users').add(
             UserModel(
               id: id,
               username: username,
               email: email,
             ).toMap(),
           );
+      DocumentSnapshot snapshot = await response.get();
+      return UserModel.fromMap((snapshot.data() as Map<String, dynamic>));
     } catch (e) {
-      log('Failed to save user info: $e');
+      log('Failed to add user info to db: $e');
+      throw e.toString();
     }
   }
 }

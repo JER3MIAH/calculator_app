@@ -20,7 +20,8 @@ class AuthService {
       );
       await userCredential.user!.updateDisplayName(username);
 
-      databaseService.saveUserInfo(userCredential.user!.uid, username, email);
+      databaseService.addUserToDataBase(
+          userCredential.user!.uid, username, email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);
@@ -33,8 +34,7 @@ class AuthService {
         email: email,
         password: password,
       );
-      databaseService.saveUserInfo(userCredential.user!.uid,
-          userCredential.user!.displayName ?? 'Username', email);
+      databaseService.retrieveUserInfo(email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);
