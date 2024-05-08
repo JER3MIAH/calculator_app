@@ -20,7 +20,7 @@ class AppSnackBar {
               Icons.warning,
               color: textColor ?? const Color(0xffEB0000),
             ),
-        leftBarIndicatorColor: leftBarColor ?? appColors.blue,
+        leftBarIndicatorColor: leftBarColor ?? const Color(0xffEB0000),
         titleText: Text(
           title ?? 'Error',
           style: TextStyle(

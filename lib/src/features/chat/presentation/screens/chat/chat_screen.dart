@@ -1,18 +1,46 @@
 import 'package:converse/src/core/data/models/user_model.dart';
+import 'package:converse/src/features/chat/presentation/screens/chat/views/message_list.dart';
+import 'package:converse/src/features/chat/presentation/screens/chat/views/user_input.dart';
+import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ChatScreen extends StatelessWidget {
-  final UserModel userModel;
+class ChatScreenArgs {
+  final UserModel recipient;
+  final UserModel currentUser;
+  const ChatScreenArgs({
+    required this.recipient,
+    required this.currentUser,
+  });
+}
+
+class ChatScreen extends HookConsumerWidget {
+  final ChatScreenArgs chatScreenArgs;
   const ChatScreen({
     super.key,
-    required this.userModel,
+    required this.chatScreenArgs,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(userModel.username),
+        title: Text(chatScreenArgs.recipient.username),
+      ),
+      body: Container(
+        color: appColors.grey80.withOpacity(.4),
+        child: Column(
+          children: [
+            Expanded(
+              child: MessageListView(
+                  sender: chatScreenArgs.currentUser,
+                  receiver: chatScreenArgs.recipient),
+            ),
+            UserInputView(
+              receiver: chatScreenArgs.recipient,
+            ),
+          ],
+        ),
       ),
     );
   }

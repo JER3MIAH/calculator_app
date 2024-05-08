@@ -1,6 +1,7 @@
 import 'package:converse/src/features/auth/logic/providers/login_provider.dart';
 import 'package:converse/src/features/auth/presentation/widgets/lined_up_text.dart';
 import 'package:converse/src/features/auth/presentation/widgets/start_aligned_text.dart';
+import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
 import 'package:converse/src/shared/shared.dart';
@@ -94,6 +95,7 @@ class LoginScreen extends HookConsumerWidget {
                           password: passwordController.text.trim(),
                         );
                 if (isSuccessful) {
+                  ref.read(userProvider.notifier).retrieveUserInfo();
                   AppNavigator.replaceAllNamed(HomeRoutes.home);
                 } else {
                   AppSnackBar.showSnackbar(message: loginProvidr.errorMessage);

@@ -1,4 +1,3 @@
-import 'package:converse/src/features/auth/logic/providers/login_provider.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/home/presentation/widgets/drawer_tile.dart';
 import 'package:converse/src/features/navigation/app_navigator.dart';
@@ -75,7 +74,7 @@ class AppDrawer extends ConsumerWidget {
             title: 'Logout',
             icon: Icons.logout,
             onTap: () async {
-              await ref.read(loginProvider.notifier).logout();
+              await ref.read(userProvider.notifier).logout();
               AppNavigator.replaceNamed(AuthRoutes.login);
             },
           ),

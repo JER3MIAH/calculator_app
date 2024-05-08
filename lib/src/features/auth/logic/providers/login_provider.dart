@@ -53,20 +53,6 @@ class LoginProvider extends ChangeNotifier {
     } catch (e) {
       isLoading = false;
       errorMessage = e.toString();
-
-      return false;
-    }
-  }
-
-  Future<bool> logout() async {
-    isLoading = true;
-    try {
-      await authService.logout();
-      isLoading = false;
-      return true;
-    } catch (e) {
-      errorMessage = e.toString();
-      isLoading = false;
       return false;
     }
   }

@@ -1,4 +1,6 @@
 import 'package:converse/src/features/chat/logic/providers/chat_service_provider.dart';
+import 'package:converse/src/features/chat/presentation/screens/chat/chat_screen.dart';
+import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/navigation/nav.dart';
 import 'package:converse/src/features/navigation/routes.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,8 @@ class ListOfUsersView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final userProv = ref.watch(userProvider);
+
     return StreamBuilder(
       stream: ref.watch(chatServiceProvider).getUsersStream(),
       builder: (context, snapshot) {
@@ -24,18 +28,27 @@ class ListOfUsersView extends ConsumerWidget {
         }
 
         final users = snapshot.data ?? [];
+        final filteredUsers =
+            users.where((user) => user.email != userProv.user.email).toList();
 
         return ListView.builder(
-          itemCount: users.length,
+          itemCount: filteredUsers.length,
           itemBuilder: (context, index) {
-            final user = users[index];
-            return UserTile(
-              onTap: () {
-                //??
-                AppNavigator.pushNamed(ChatRoutes.chat, args: user);
-              },
-              username: user.email,
-            );
+            final user = filteredUsers[index];
+            if (user.email != userProv.user.email) {
+              return UserTile(
+                onTap: () {
+                  AppNavigator.pushNamed(
+                    ChatRoutes.chat,
+                    args: ChatScreenArgs(
+                        recipient: user, currentUser: userProv.user),
+                  );
+                },
+                username: user.email,
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
           },
         );
       },
