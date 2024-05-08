@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MessageListView extends ConsumerWidget {
-  final UserModel sender;
   final UserModel receiver;
   const MessageListView({
     super.key,
-    required this.sender,
     required this.receiver,
   });
 
@@ -20,7 +18,6 @@ class MessageListView extends ConsumerWidget {
     return StreamBuilder(
       stream: ref.read(chatProvider.notifier).getMessages(
             receiver: receiver,
-            sender: sender,
           ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

@@ -15,7 +15,7 @@ class ChatService {
       return snap.docs.map((doc) {
         final user = doc.data();
         return UserModel(
-          id: doc.id,
+          id: user['id'],
           username: user['username'],
           email: user['email'],
         );
@@ -33,7 +33,7 @@ class ChatService {
     List<String> ids = [userProvider.user.id, receiver.id];
     ids.sort();
     String chatRoomID = ids.join('_');
-
+    print(chatRoomID);
     //? Add new message to database
     await _db
         .collection('chat_rooms')
@@ -48,6 +48,8 @@ class ChatService {
     List<String> ids = [userProvider.user.id, receiver.id];
     ids.sort();
     String chatRoomID = ids.join('_');
+
+    print(chatRoomID);
 
     return _db
         .collection('chat_rooms')

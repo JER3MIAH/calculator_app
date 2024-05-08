@@ -31,6 +31,7 @@ class LoginScreen extends HookConsumerWidget {
           // );
         },
         child: AppColumn(
+          shouldScroll: true,
           margin: EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 55.h),
           children: [
             const BackAndAppIcon(),

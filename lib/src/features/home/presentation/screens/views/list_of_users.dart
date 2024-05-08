@@ -1,5 +1,4 @@
 import 'package:converse/src/features/chat/logic/providers/chat_service_provider.dart';
-import 'package:converse/src/features/chat/presentation/screens/chat/chat_screen.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/navigation/nav.dart';
 import 'package:converse/src/features/navigation/routes.dart';
@@ -40,11 +39,10 @@ class ListOfUsersView extends ConsumerWidget {
                 onTap: () {
                   AppNavigator.pushNamed(
                     ChatRoutes.chat,
-                    args: ChatScreenArgs(
-                        recipient: user, currentUser: userProv.user),
+                    args: user,
                   );
                 },
-                username: user.email,
+                username: user.username,
               );
             } else {
               return const SizedBox.shrink();

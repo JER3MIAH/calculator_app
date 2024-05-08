@@ -28,7 +28,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Stream<List<ChatMessage>> getMessages(
-      {required UserModel receiver, required UserModel sender}) {
+      {required UserModel receiver}) {
     return chatService.getMessages(receiver);
   }
 }

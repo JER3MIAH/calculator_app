@@ -20,8 +20,7 @@ class AuthService {
       );
       await userCredential.user!.updateDisplayName(username);
 
-      databaseService.addUserToDataBase(
-          userCredential.user!.uid, username, email);
+      databaseService.addUserToDataBase(username, email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);
@@ -34,7 +33,7 @@ class AuthService {
         email: email,
         password: password,
       );
-      databaseService.retrieveUserInfo(email);
+      await databaseService.retrieveUserInfo(email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);

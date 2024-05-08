@@ -31,6 +31,7 @@ class UserProvider extends ChangeNotifier {
     try {
       await authService.logout();
       user = UserModel.empty();
+      notifyListeners();
       return true;
     } catch (e) {
       return false;

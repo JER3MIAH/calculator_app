@@ -5,39 +5,34 @@ import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ChatScreenArgs {
-  final UserModel recipient;
-  final UserModel currentUser;
-  const ChatScreenArgs({
-    required this.recipient,
-    required this.currentUser,
-  });
-}
+// class ChatScreenArgs {
+//   final UserModel recipient;
+//   final UserModel currentUser;
+//   const ChatScreenArgs({
+//     required this.recipient,
+//     required this.currentUser,
+//   });
+// }
 
 class ChatScreen extends HookConsumerWidget {
-  final ChatScreenArgs chatScreenArgs;
-  const ChatScreen({
-    super.key,
-    required this.chatScreenArgs,
-  });
+  final UserModel recipient;
+  const ChatScreen({super.key, required this.recipient});
 
   @override
   Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(chatScreenArgs.recipient.username),
+        title: Text(recipient.username),
       ),
       body: Container(
         color: appColors.grey80.withOpacity(.4),
         child: Column(
           children: [
             Expanded(
-              child: MessageListView(
-                  sender: chatScreenArgs.currentUser,
-                  receiver: chatScreenArgs.recipient),
+              child: MessageListView(receiver: recipient),
             ),
             UserInputView(
-              receiver: chatScreenArgs.recipient,
+              receiver: recipient,
             ),
           ],
         ),

@@ -49,6 +49,7 @@ class LoginProvider extends ChangeNotifier {
     try {
       userCredential = await authService.logIn(email, password);
       isLoading = false;
+      notifyListeners();
       return true;
     } catch (e) {
       isLoading = false;

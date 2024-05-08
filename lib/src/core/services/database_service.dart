@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:converse/src/core/data/models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseService {
   final _db = FirebaseFirestore.instance;
@@ -20,11 +21,11 @@ class DatabaseService {
   }
 
   Future<UserModel> addUserToDataBase(
-      String id, String username, String email) async {
+      String username, String email) async {
     try {
       DocumentReference response = await _db.collection('users').add(
             UserModel(
-              id: id,
+              id: const Uuid().v4(),
               username: username,
               email: email,
             ).toMap(),
