@@ -22,6 +22,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return BounceInAnimation(
       child: ElevatedButton(
         onPressed: onTap,
@@ -31,11 +32,11 @@ class AppButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(10),
           ),
-          backgroundColor: buttonColor ?? appColors.blue,
+          backgroundColor: buttonColor ?? theme.primary,
         ),
         child: isLoading
             ? CircularProgressIndicator.adaptive(
-                backgroundColor: appColors.white,
+                backgroundColor: theme.background,
               )
             : Text(
                 title,
@@ -43,7 +44,7 @@ class AppButton extends StatelessWidget {
                     Theme.of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: appColors.white),
+                        .copyWith(color: theme.background),
               ),
       ),
     );
@@ -77,8 +78,8 @@ class AppOutlinedButton extends StatelessWidget {
         height: height,
         child: OutlinedButton(
           style: ButtonStyle(
-            padding: MaterialStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 12.h)),
+            padding:
+                MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12.h)),
             overlayColor: MaterialStatePropertyAll(
                 overlayColor ?? appColors.error.withOpacity(0.4)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

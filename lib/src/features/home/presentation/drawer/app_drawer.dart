@@ -12,6 +12,8 @@ class AppDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final theme = Theme.of(context).colorScheme;
+
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,10 +29,10 @@ class AppDrawer extends ConsumerWidget {
                   children: [
                     CircleAvatar(
                       radius: 30.r,
-                      backgroundColor: appColors.blue.withOpacity(.5),
+                      backgroundColor: theme.primary.withOpacity(.5),
                       child: Icon(
                         CupertinoIcons.person,
-                        color: appColors.white,
+                        color: theme.background,
                       ),
                     ),
                     AppInkWell(

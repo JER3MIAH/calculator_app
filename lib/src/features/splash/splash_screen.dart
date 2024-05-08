@@ -22,18 +22,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       body: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: appColors.blue,
+          color: theme.primary,
         ),
         child: Center(
           child: Text(
             'Converse .',
             style: TextStyle(
-              color: appColors.white,
+              color: theme.background,
               fontSize: 30.sp,
             ),
           ),

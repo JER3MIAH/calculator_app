@@ -46,10 +46,11 @@ class AppTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     final isObscure = useState<bool>(obscureText);
     final currentBorderColor = useState<Color>(
       controller != null && controller!.text.isNotEmpty
-          ? appColors.blue
+          ? theme.primary
           : appColors.inputFieldBorderColor.withOpacity(.5),
     );
     final errorText = useState<String>('');
@@ -57,7 +58,7 @@ class AppTextField extends HookWidget {
 
     focusNode.addListener(() {
       if (focusNode.hasFocus || address!.isNotEmpty) {
-        currentBorderColor.value = appColors.blue;
+        currentBorderColor.value = theme.primary;
       } else {
         if (controller != null && controller!.text.isEmpty) {
           currentBorderColor.value = appColors.inputFieldBorderColor;
@@ -109,7 +110,7 @@ class AppTextField extends HookWidget {
                     currentBorderColor.value = appColors.error;
                   } else {
                     errorText.value = '';
-                    currentBorderColor.value = appColors.blue;
+                    currentBorderColor.value = theme.primary;
                   }
                   return validator!(text) != null ? '' : null;
                 },

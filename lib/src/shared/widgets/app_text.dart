@@ -21,6 +21,7 @@ class AppText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment:
           isStartAligned ? MainAxisAlignment.start : MainAxisAlignment.center,
@@ -34,7 +35,7 @@ class AppText extends StatelessWidget {
                 color: color,
                 overflow: TextOverflow.ellipsis,
                 decoration: isDecorated ? TextDecoration.underline : null,
-                decorationColor: isDecorated ? appColors.blue : null,
+                decorationColor: isDecorated ? theme.primary : null,
               ),
         ),
       ],

@@ -1,5 +1,5 @@
 import 'package:converse/src/features/home/presentation/drawer/app_drawer.dart';
-import 'package:converse/src/shared/shared.dart';
+import 'package:converse/src/features/home/presentation/screens/views/list_of_users.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,19 +7,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Converse .',
           style: TextStyle(
-            color: appColors.blue,
+            color: theme.primary,
           ),
         ),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text('Home'),
-      ),
+      body: const ListOfUsersView(),
       drawer: const AppDrawer()
     );
   }
