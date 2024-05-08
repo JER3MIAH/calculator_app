@@ -1,6 +1,13 @@
+import 'package:converse/src/core/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
+  final DatabaseService databaseService;
+
+  AuthService({
+    required this.databaseService,
+  });
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<UserCredential> signUp(
@@ -11,7 +18,9 @@ class AuthService {
         email: email,
         password: password,
       );
-      await _auth.currentUser!.updateDisplayName(username);
+      await userCredential.user!.updateDisplayName(username);
+
+      databaseService.saveUserInfo(userCredential.user!.uid, username, email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);
@@ -24,6 +33,8 @@ class AuthService {
         email: email,
         password: password,
       );
+      databaseService.saveUserInfo(userCredential.user!.uid,
+          userCredential.user!.displayName ?? 'Username', email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);
