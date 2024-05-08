@@ -1,5 +1,6 @@
 import 'package:converse/src/core/data/models/user_model.dart';
 import 'package:converse/src/features/chat/logic/providers/chat_provider.dart';
+import 'package:converse/src/features/chat/presentation/widget/message_box.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,7 @@ class MessageListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    // final theme = Theme.of(context).colorScheme;
     final userProv = ref.watch(userProvider);
 
     return StreamBuilder(
@@ -38,19 +40,9 @@ class MessageListView extends ConsumerWidget {
             final chat = chats[index];
             bool isCurrentUser = chat.sender.id == userProv.user.id;
 
-            return Row(
-              mainAxisAlignment: isCurrentUser
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(chat.message),
-                ),
-              ],
+            return MessageBox(
+              isCurrentUser: isCurrentUser,
+              message: chat.message,
             );
           },
         );

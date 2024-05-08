@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   Color blue = const Color(0xFF3B45F1);
+  Color darkBlue = const Color(0xFF072F5F);
   Color white = const Color(0xFFFFFFFF);
   Color error = Colors.red;
   Color grey = const Color(0xff343434);
