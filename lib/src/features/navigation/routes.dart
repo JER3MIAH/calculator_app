@@ -12,3 +12,7 @@ class HomeRoutes {
   static const home = '/homeScreen';
 }
 
+class ChatRoutes {
+  static const chat = '/chatScreen';
+  static const worldChat = '/worldChatScreen';
+}

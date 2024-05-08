@@ -1,6 +1,9 @@
 import 'package:converse/src/features/chat/logic/providers/chat_service_provider.dart';
+import 'package:converse/src/features/navigation/nav.dart';
+import 'package:converse/src/features/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../widgets/widgets.dart';
 
 class ListOfUsersView extends ConsumerWidget {
   const ListOfUsersView({super.key});
@@ -28,31 +31,14 @@ class ListOfUsersView extends ConsumerWidget {
             final user = users[index];
             return UserTile(
               onTap: () {
-                // Handle onTap
+                //??
+                AppNavigator.pushNamed(ChatRoutes.chat, args: user);
               },
               username: user.email,
             );
           },
         );
       },
-    );
-  }
-}
-
-class UserTile extends StatelessWidget {
-  final VoidCallback onTap;
-  final String username;
-  const UserTile({
-    super.key,
-    required this.onTap,
-    required this.username,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      title: Text(username),
     );
   }
 }

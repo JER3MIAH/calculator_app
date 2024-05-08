@@ -1,4 +1,5 @@
 import 'package:converse/src/features/navigation/pages/auth_pages.dart';
+import 'package:converse/src/features/navigation/pages/chat_pages.dart';
 import 'package:converse/src/features/navigation/pages/home_pages.dart';
 import 'package:converse/src/features/navigation/routes.dart';
 import 'package:converse/src/features/splash/splash_screen.dart';
@@ -21,6 +22,7 @@ class AppPages {
     ),
     ...authPages,
     ...homePages,
+    ...chatPages,
   ];
 }
 
