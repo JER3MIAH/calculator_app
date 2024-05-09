@@ -35,13 +35,13 @@ ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.w400),
   ),
   colorScheme: ColorScheme.light(
-    onPrimary: appColors.blue.withOpacity(0.6),
-    primary: appColors.blue,
+    primary: const Color(0xFF0088CC),
+    primaryContainer: const Color(0xFF39A2DB),
     secondary: appColors.grey.withOpacity(0.3),
     error: appColors.error,
-    onError: appColors.error.withOpacity(0.42),
     background: appColors.white,
-  ).copyWith(background: appColors.scaffoldColor),
+    onBackground: const Color(0xFFEEEEEE),
+  ),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -73,13 +73,13 @@ ThemeData darkTheme = ThemeData(
         fontWeight: FontWeight.w400),
   ),
   colorScheme: ColorScheme.dark(
-    onPrimary: appColors.blue.withOpacity(0.6),
-    primary: appColors.blue,
+    primary: const Color(0xFF1A2233),
+    primaryContainer: const Color(0xFF39A2DB),
+    background: const Color(0xFF212A3E),
+    onBackground: const Color(0xFF2C3549),
     secondary: appColors.grey.withOpacity(0.3),
     error: appColors.error,
-    onError: appColors.error.withOpacity(0.42),
-    background: appColors.white,
-  ).copyWith(background: appColors.scaffoldColor),
+  ),
 );
 
 var appColors = AppColors();

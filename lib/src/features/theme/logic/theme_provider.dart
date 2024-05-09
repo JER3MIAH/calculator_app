@@ -6,10 +6,12 @@ final themeProvider = ChangeNotifierProvider<ThemeProvider>((ref) {
 });
 
 class ThemeProvider extends ChangeNotifier {
-  bool isDarkMode = false;
+  bool _isDarkMode = false;
+
+  bool get isDarkMode => _isDarkMode;
 
   void toggleTheme() {
-    isDarkMode = !isDarkMode;
+    _isDarkMode = !_isDarkMode;
     notifyListeners();
   }
 }

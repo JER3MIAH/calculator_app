@@ -18,21 +18,23 @@ class AppDrawer extends ConsumerWidget {
     final themeProv = ref.watch(themeProvider);
 
     return Drawer(
+      backgroundColor: theme.background,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          YBox(30.h),
-          Padding(
+          Container(
+            color: theme.primary,
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                YBox(30.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircleAvatar(
                       radius: 30.r,
-                      backgroundColor: theme.primary.withOpacity(.5),
+                      backgroundColor: theme.primaryContainer,
                       child: Icon(
                         CupertinoIcons.person,
                         color: theme.background,
@@ -53,16 +55,12 @@ class AppDrawer extends ConsumerWidget {
                   userProv.user.username,
                   style: TextStyle(
                     fontSize: 18.sp,
+                    color: appColors.white,
                   ),
                 ),
+                YBox(10.h),
               ],
             ),
-          ),
-          YBox(10.h),
-          Container(
-            height: .5.h,
-            width: double.infinity,
-            color: appColors.grey,
           ),
           YBox(20.h),
           AppDrawerTile(

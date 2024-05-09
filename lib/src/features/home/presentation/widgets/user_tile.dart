@@ -1,6 +1,10 @@
+import 'package:converse/src/features/theme/logic/theme_provider.dart';
+import 'package:converse/src/shared/shared.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserTile extends StatelessWidget {
+class UserTile extends ConsumerWidget {
   final VoidCallback onTap;
   final String username;
   const UserTile({
@@ -10,10 +14,35 @@ class UserTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      title: Text(username),
+  Widget build(BuildContext context, ref) {
+    final theme = Theme.of(context).colorScheme;
+    final themeProv = ref.watch(themeProvider);
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: themeProv.isDarkMode
+                ? appColors.black.withOpacity(.4)
+                : appColors.grey.withOpacity(.1),
+          ),
+        ),
+      ),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(
+          radius: 25.r,
+          backgroundColor: theme.primary,
+          child: Icon(
+            CupertinoIcons.person,
+            color: appColors.white,
+          ),
+        ),
+        title: Text(username),
+        subtitle: const Text('.  .  .'),
+      ),
     );
   }
 }
