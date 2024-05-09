@@ -1,6 +1,6 @@
 import 'package:converse/src/features/navigation/nav.dart';
-import 'package:converse/src/features/theme/theme_provider.dart';
-import 'package:converse/src/shared/theme/theme.dart';
+import 'package:converse/src/features/theme/logic/theme_provider.dart';
+import 'package:converse/src/features/theme/data/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
