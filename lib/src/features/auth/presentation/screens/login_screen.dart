@@ -25,10 +25,10 @@ class LoginScreen extends HookConsumerWidget {
       body: Form(
         key: formKey,
         onChanged: () {
-          // viewmodel.onInputChanged(
-          //   email: emailController.text.trim(),
-          //   password: passwordController.text.trim(),
-          // );
+          ref.read(loginProvider).onInputChanged(
+                email: emailController.text.trim(),
+                password: passwordController.text.trim(),
+              );
         },
         child: AppColumn(
           shouldScroll: true,
@@ -42,12 +42,13 @@ class LoginScreen extends HookConsumerWidget {
                 height: 2,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w500,
+                color: theme.outline,
               ),
             ),
-            StartAlignedText(
+            const StartAlignedText(
               text: 'Provide your information below to get started',
               style: TextStyle(
-                color: theme.secondary.withOpacity(0.6),
+                color: Color(0xFF476072),
               ),
             ),
             YBox(30.h),
@@ -103,8 +104,9 @@ class LoginScreen extends HookConsumerWidget {
                 }
               }
             },
-            buttonColor: theme.primary,
-            // : theme.secondary.withOpacity(0.1),
+            buttonColor: loginProvidr.buttonEnabled
+                ? theme.primaryContainer
+                : theme.primary,
           ),
           YBox(10.h),
           LinedUpText(

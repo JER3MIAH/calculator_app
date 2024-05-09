@@ -12,6 +12,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: theme.background,
         appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: theme.primary,
+          title: Text(
+            'Converse',
+            style: TextStyle(
+              color: appColors.white,
+            ),
+          ),
           leading: Builder(builder: (context) {
             return GestureDetector(
               onTap: () {
@@ -23,14 +31,6 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           }),
-          backgroundColor: theme.primary,
-          title: Text(
-            'Converse',
-            style: TextStyle(
-              color: appColors.white,
-            ),
-          ),
-          centerTitle: true,
         ),
         body: const ListOfUsersView(),
         drawer: const AppDrawer());

@@ -93,7 +93,8 @@ class AppTextField extends HookWidget {
                 style: Theme.of(context)
                     .textTheme
                     .displayMedium!
-                    .copyWith(color: appColors.black),
+                    .copyWith(color: theme.outline),
+                cursorColor: theme.primaryContainer,
                 onTap: onTap,
                 initialValue: initialText,
                 textAlign: TextAlign.start,
@@ -137,7 +138,7 @@ class AppTextField extends HookWidget {
                             isObscure.value
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: const Color(0xFF476072),
                           ),
                         )
                       : null,

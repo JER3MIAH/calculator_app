@@ -23,6 +23,7 @@ class LinedUpText extends StatelessWidget {
           leadingText,
           style: TextStyle(
             fontSize: 14.sp,
+            color: theme.colorScheme.outline,
           ),
         ),
         GestureDetector(
@@ -30,10 +31,10 @@ class LinedUpText extends StatelessWidget {
           child: Text(
             trailingText,
             style: TextStyle(
-              color: theme.colorScheme.primary,
+              color: theme.colorScheme.primaryContainer,
               fontSize: 14.sp,
               decoration: isUndelined ? TextDecoration.underline : null,
-              decorationColor: theme.colorScheme.primary,
+              decorationColor: theme.colorScheme.primaryContainer,
               decorationThickness: 2,
             ),
           ),

@@ -52,7 +52,7 @@ class SignUpScreen extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
-                  color: theme.secondary,
+                  color: const Color(0xFF476072),
                 ),
               ),
               YBox(20.h),
@@ -115,8 +115,8 @@ class SignUpScreen extends HookConsumerWidget {
                   }
                 },
                 buttonColor: signupProvider.buttonEnabled
-                    ? theme.primary
-                    : theme.secondary,
+                    ? theme.primaryContainer
+                    : theme.primary,
               ),
               YBox(27.h),
               LinedUpText(

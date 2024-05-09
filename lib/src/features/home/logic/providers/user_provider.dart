@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:converse/src/core/data/models/user_model.dart';
 import 'package:converse/src/core/providers/database_service_provider.dart';
 import 'package:converse/src/core/services/database_service.dart';
@@ -22,9 +24,12 @@ class UserProvider extends ChangeNotifier {
   UserModel user = UserModel.empty();
 
   void retrieveUserInfo() async {
-    user = await databaseService
-        .retrieveUserInfo(FirebaseAuth.instance.currentUser!.email ?? 'null');
-    notifyListeners();
+    try {
+      user = await databaseService
+          .retrieveUserInfo(FirebaseAuth.instance.currentUser!.email ?? 'null');
+    } catch (e) {
+      log('Could not retrieve user info, cuz: $e');
+    }
   }
 
   Future<bool> logout() async {
