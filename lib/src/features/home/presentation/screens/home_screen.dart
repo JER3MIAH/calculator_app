@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:converse/src/features/home/presentation/drawer/app_drawer.dart';
 import 'package:converse/src/features/home/presentation/screens/views/list_of_users.dart';
 import 'package:converse/src/shared/shared.dart';
@@ -14,11 +15,20 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: theme.primary,
-          title: Text(
-            'Converse',
-            style: TextStyle(
-              color: appColors.white,
-            ),
+          title: AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                'Converse',
+                speed: const Duration(milliseconds: 500),
+                textStyle: TextStyle(
+                  color: appColors.white,
+                  fontSize: 22.sp,
+                ),
+              ),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
           ),
           leading: Builder(builder: (context) {
             return GestureDetector(

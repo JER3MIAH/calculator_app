@@ -11,7 +11,7 @@ List<GetPage> chatPages = [
       recipient: Get.arguments as UserModel,
     ),
     transition: Transition.native,
-    transitionDuration: const Duration(milliseconds: 500),
+    transitionDuration: const Duration(milliseconds: 1000),
   ),
   GetPage(
     name: ChatRoutes.worldChat,

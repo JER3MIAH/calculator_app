@@ -66,8 +66,11 @@ class AppDrawer extends ConsumerWidget {
           YBox(20.h),
           AppDrawerTile(
             title: 'World chat',
-            icon:globeIcon,
-            onTap: () {},
+            icon: globeIcon,
+            onTap: () {
+              // AppNavigator.popRoute();
+              AppNavigator.pushNamed(ChatRoutes.worldChat);
+            },
           ),
           AppDrawerTile(
             title: 'Settings',

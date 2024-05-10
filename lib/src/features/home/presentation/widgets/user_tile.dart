@@ -18,30 +18,34 @@ class UserTile extends ConsumerWidget {
     final theme = Theme.of(context).colorScheme;
     final themeProv = ref.watch(themeProvider);
 
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.w),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: themeProv.isDarkMode
-                ? appColors.black.withOpacity(.4)
-                : appColors.grey.withOpacity(.1),
-          ),
-        ),
-      ),
-      child: ListTile(
+    return BounceInAnimation(
+      child: GestureDetector(
         onTap: onTap,
-        contentPadding: EdgeInsets.zero,
-        leading: CircleAvatar(
-          radius: 25.r,
-          backgroundColor: theme.primary,
-          child: Icon(
-            CupertinoIcons.person,
-            color: appColors.white,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 10.w),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: themeProv.isDarkMode
+                    ? appColors.black.withOpacity(.4)
+                    : appColors.grey.withOpacity(.1),
+              ),
+            ),
+          ),
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: CircleAvatar(
+              radius: 25.r,
+              backgroundColor: theme.primary,
+              child: Icon(
+                CupertinoIcons.person,
+                color: appColors.white,
+              ),
+            ),
+            title: Text(username),
+            subtitle: const Text('.  .  .'),
           ),
         ),
-        title: Text(username),
-        subtitle: const Text('.  .  .'),
       ),
     );
   }
