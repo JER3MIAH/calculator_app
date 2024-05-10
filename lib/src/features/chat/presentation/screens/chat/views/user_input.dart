@@ -15,6 +15,7 @@ class UserInputView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final theme = Theme.of(context).colorScheme;
+
     final chatController = useTextEditingController();
     final isEmpty = useState<bool>(false);
 
@@ -24,35 +25,50 @@ class UserInputView extends HookConsumerWidget {
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              controller: chatController,
-              onChanged: (value) {
-                isEmpty.value = chatController.text.isEmpty;
-              },
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 12.w),
-                hintText: 'Type a message...',
+            child: Container(
+              constraints: BoxConstraints(maxHeight: 100.h),
+              child: TextField(
+                controller: chatController,
+                keyboardType: TextInputType.multiline,
+                style: TextStyle(color: theme.outline),
+                maxLines: null,
+                onTapOutside: (_) {
+                  FocusScope.of(context).unfocus();
+                },
+                onChanged: (value) {
+                  isEmpty.value = chatController.text.isEmpty;
+                },
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(left: 12.w),
+                  hintText: 'Type a message...',
+                ),
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              ref.read(chatProvider.notifier).sendMessage(
-                  receiver: receiver, message: chatController.text.trim());
-              chatController.clear();
-            },
-            child: Container(
-              margin: const EdgeInsets.all(12),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: isEmpty.value ? theme.primary : theme.primaryContainer,
-                shape: BoxShape.circle,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  ref.read(chatProvider.notifier).sendMessage(
+                      receiver: receiver, message: chatController.text.trim());
+                  chatController.clear();
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color:
+                        isEmpty.value ? theme.primary : theme.primaryContainer,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.send,
+                    color: isEmpty.value ? theme.background : appColors.white,
+                  ),
+                ),
               ),
-              child: Icon(
-                Icons.send,
-                color: isEmpty.value ? theme.background : appColors.white,
-              ),
-            ),
+            ],
           ),
         ],
       ),

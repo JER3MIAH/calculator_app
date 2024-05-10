@@ -25,9 +25,16 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              child: Icon(
-                Icons.menu,
-                color: appColors.white,
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: SvgAsset(
+                    assetName: drawerIcon,
+                    color: appColors.white,
+                  ),
+                ),
               ),
             );
           }),

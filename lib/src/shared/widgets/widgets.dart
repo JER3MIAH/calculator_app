@@ -10,3 +10,4 @@ export 'sizedbox.dart';
 export 'icon_filler.dart';
 export 'back_and_appicon.dart';
 export 'app_icon_and_text.dart';
+export 'svg_asset.dart';

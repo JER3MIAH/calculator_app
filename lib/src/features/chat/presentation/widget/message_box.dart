@@ -21,23 +21,28 @@ class MessageBox extends ConsumerWidget {
       mainAxisAlignment:
           isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-          margin: EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 10.h),
-          decoration: BoxDecoration(
-            color: isCurrentUser
-                ? theme.primaryContainer
-                : themeProv.isDarkMode
-                    ? theme.primary
-                    : theme.background,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text(
-            message,
-            style: TextStyle(
-                color: !isCurrentUser && !themeProv.isDarkMode
-                    ? null
-                    : appColors.white),
+        Flexible(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * .8,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+            margin: EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 5.h),
+            decoration: BoxDecoration(
+              color: isCurrentUser
+                  ? theme.primaryContainer
+                  : themeProv.isDarkMode
+                      ? theme.primary
+                      : theme.background,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              message,
+              style: TextStyle(
+                  color: !isCurrentUser && !themeProv.isDarkMode
+                      ? null
+                      : appColors.white),
+            ),
           ),
         ),
       ],

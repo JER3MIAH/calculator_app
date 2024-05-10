@@ -44,9 +44,10 @@ class AppDrawer extends ConsumerWidget {
                       onTap: () {
                         ref.read(themeProvider.notifier).toggleTheme();
                       },
-                      child: themeProv.isDarkMode
-                          ? const Icon(CupertinoIcons.sun_haze)
-                          : const Icon(CupertinoIcons.moon),
+                      child: SvgAsset(
+                        assetName: themeProv.isDarkMode ? sunIcon : moonIcon,
+                        color: appColors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -65,18 +66,18 @@ class AppDrawer extends ConsumerWidget {
           YBox(20.h),
           AppDrawerTile(
             title: 'World chat',
-            icon: CupertinoIcons.globe,
+            icon:globeIcon,
             onTap: () {},
           ),
           AppDrawerTile(
             title: 'Settings',
-            icon: CupertinoIcons.settings,
+            icon: settingIcon,
             onTap: () {},
           ),
           const Spacer(),
           AppDrawerTile(
             title: 'Logout',
-            icon: Icons.logout,
+            icon: logoutIcon,
             onTap: () async {
               await ref.read(userProvider.notifier).logout();
               AppNavigator.replaceNamed(AuthRoutes.login);

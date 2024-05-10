@@ -1,4 +1,5 @@
 import 'package:converse/src/core/data/models/user_model.dart';
+import 'package:converse/src/features/chat/presentation/screens/chat/views/chat_menu_button.dart';
 import 'package:converse/src/features/chat/presentation/screens/chat/views/message_list.dart';
 import 'package:converse/src/features/chat/presentation/screens/chat/views/user_input.dart';
 import 'package:converse/src/shared/shared.dart';
@@ -26,6 +27,12 @@ class ChatScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.primary,
+        leading: BackButton(
+          color: appColors.white,
+        ),
+        actions: const [
+          ChatMenuButton(),
+        ],
         title: Row(
           children: [
             CircleAvatar(

@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 
 class AppDrawerTile extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final String icon;
   final VoidCallback onTap;
+  final double? rightPadding;
   const AppDrawerTile({
     super.key,
     required this.title,
     required this.icon,
     required this.onTap,
+    this.rightPadding,
   });
 
   @override
@@ -17,11 +19,8 @@ class AppDrawerTile extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: Padding(
-        padding: EdgeInsets.only(right: 17.w),
-        child: Icon(
-          icon,
-          color: const Color(0xFF476072),
-        ),
+        padding: EdgeInsets.only(right: rightPadding ?? 17.w),
+        child: SvgAsset(assetName: icon, color: appColors.coolGrey,),
       ),
       title: Text(title),
     );
