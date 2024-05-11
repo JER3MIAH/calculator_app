@@ -10,6 +10,7 @@ class AuthRoutes {
 
 class HomeRoutes {
   static const home = '/homeScreen';
+  static const newMessage = '/newMessageScreen';
 }
 
 class ChatRoutes {

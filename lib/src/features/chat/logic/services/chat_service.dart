@@ -23,6 +23,20 @@ class ChatService {
     });
   }
 
+  Stream<List<UserModel>> getChattedUsersStream() {
+    //TODO: Fix to actually return users with existing chat
+    return _db.collection('users').snapshots().map((snap) {
+      return snap.docs.map((doc) {
+        final user = doc.data();
+        return UserModel(
+          id: user['id'],
+          username: user['username'],
+          email: user['email'],
+        );
+      }).toList();
+    });
+  }
+
   Future<void> sendMessage(UserModel receiver, String message) async {
     ChatMessage newMessage = ChatMessage(
       sender: userProvider.user,

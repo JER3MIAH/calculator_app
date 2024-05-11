@@ -4,15 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserTile extends ConsumerWidget {
+class ChatTile extends ConsumerWidget {
   final VoidCallback onTap;
-  final String username, email;
-
-  const UserTile({
+  final String username;
+  const ChatTile({
     super.key,
     required this.onTap,
     required this.username,
-    required this.email,
   });
 
   @override
@@ -45,12 +43,7 @@ class UserTile extends ConsumerWidget {
               ),
             ),
             title: Text(username),
-            subtitle: Text(
-              email,
-              style: TextStyle(
-                color: appColors.coolGrey,
-              ),
-            ),
+            subtitle: const Text('.  .  .'),
           ),
         ),
       ),
