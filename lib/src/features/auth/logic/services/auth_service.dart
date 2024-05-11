@@ -20,7 +20,7 @@ class AuthService {
       );
       await userCredential.user!.updateDisplayName(username);
 
-      databaseService.addUserToDataBase(username, email);
+      await databaseService.addUserToDataBase(username, email);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e);

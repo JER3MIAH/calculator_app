@@ -1,5 +1,10 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:converse/src/core/data/models/user_model.dart';
+import 'package:converse/src/features/chat/data/enums/enums.dart';
 import 'package:converse/src/features/chat/data/models/message.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 
@@ -9,6 +14,7 @@ class ChatService {
     required this.userProvider,
   });
   final _db = FirebaseFirestore.instance;
+  final _firebaseStorage = FirebaseStorage.instance;
 
   Stream<List<UserModel>> getUsersStream() {
     return _db.collection('users').snapshots().map((snap) {
@@ -37,17 +43,26 @@ class ChatService {
     });
   }
 
-  Future<void> sendMessage(UserModel receiver, String message) async {
-    ChatMessage newMessage = ChatMessage(
-      sender: userProvider.user,
-      receiver: receiver,
-      message: message,
-      timeStamp: Timestamp.now(),
-    );
+  Future<void> sendMessage(
+    UserModel receiver,
+    String message,
+    MessageType messageType,
+  ) async {
     List<String> ids = [userProvider.user.id, receiver.id];
     ids.sort();
     String chatRoomID = ids.join('_');
+    String? imageUrl;
 
+    if (messageType == MessageType.image) {
+      imageUrl = await _uploadImage(File(message));
+    }
+    ChatMessage newMessage = ChatMessage(
+      sender: userProvider.user,
+      receiver: receiver,
+      message: messageType == MessageType.image ? imageUrl! : message,
+      messageType: messageType,
+      timeStamp: Timestamp.now(),
+    );
     //? Add new message to database
     await _db
         .collection('chat_rooms')
@@ -56,6 +71,22 @@ class ChatService {
         .add(
           newMessage.toMap(),
         );
+  }
+
+  Future<String?> _uploadImage(File imageFile) async {
+    try {
+      final ref = _firebaseStorage
+          .ref()
+          .child('chat_images')
+          .child(DateTime.now().toString());
+      final uploadTask = ref.putFile(imageFile);
+      final snapshot = await uploadTask.whenComplete(() {});
+      final imageUrl = await snapshot.ref.getDownloadURL();
+      return imageUrl;
+    } catch (e) {
+      log('Failed to upload image: $e');
+      return null;
+    }
   }
 
   Stream<List<ChatMessage>> getMessages(UserModel receiver) {

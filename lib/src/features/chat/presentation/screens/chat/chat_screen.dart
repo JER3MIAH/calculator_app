@@ -5,6 +5,7 @@ import 'package:converse/src/features/chat/presentation/screens/chat/views/user_
 import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // class ChatScreenArgs {
@@ -23,6 +24,7 @@ class ChatScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final theme = Theme.of(context).colorScheme;
+    final scrollController = useScrollController();
 
     return Scaffold(
       appBar: AppBar(
@@ -57,10 +59,14 @@ class ChatScreen extends HookConsumerWidget {
         child: Column(
           children: [
             Expanded(
-              child: MessageListView(receiver: recipient),
+              child: MessageListView(
+                receiver: recipient,
+                scrollController: scrollController,
+              ),
             ),
             UserInputView(
               receiver: recipient,
+              scrollController: scrollController,
             ),
           ],
         ),

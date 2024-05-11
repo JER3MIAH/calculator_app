@@ -1,5 +1,6 @@
 import 'package:converse/src/core/data/models/user_model.dart';
 import 'package:converse/src/features/chat/logic/providers/chat_provider.dart';
+import 'package:converse/src/features/theme/data/theme.dart';
 import 'package:converse/src/shared/shared.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 class UserInputView extends HookConsumerWidget {
+  final ScrollController scrollController;
   final UserModel receiver;
   const UserInputView({
     super.key,
     required this.receiver,
+    required this.scrollController,
   });
 
   @override
@@ -72,34 +75,39 @@ class UserInputView extends HookConsumerWidget {
                   ),
                 ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(chatProvider.notifier).sendMessage(
-                          receiver: receiver,
-                          message: chatController.text.trim());
-                      chatController.clear();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.all(12),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: isEmpty.value
-                            ? theme.primary
-                            : theme.primaryContainer,
-                        shape: BoxShape.circle,
+              isEmpty.value
+                  ? GestureDetector(
+                      onTap: () {
+                        ref
+                            .read(chatProvider.notifier)
+                            .sendImage(receiver: receiver);
+                      },
+                      child: _buildCircle(
+                        color: theme.primaryContainer,
+                        child: Icon(
+                          Icons.image,
+                          color: appColors.white,
+                        ),
                       ),
-                      child: SvgAsset(
-                        assetName: sendIcon,
-                        color:
-                            isEmpty.value ? theme.background : appColors.white,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        ref.read(chatProvider.notifier).sendMessage(
+                            receiver: receiver,
+                            message: chatController.text.trim());
+                        chatController.clear();
+                        scrollController.animateTo(0,
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeOut);
+                      },
+                      child: _buildCircle(
+                        color: theme.primaryContainer,
+                        child: SvgAsset(
+                          assetName: sendIcon,
+                          color: appColors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
             ],
           ),
           Offstage(
@@ -127,6 +135,18 @@ class UserInputView extends HookConsumerWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildCircle({Widget? child, Color? color, EdgeInsets? margin}) {
+    return Container(
+      margin: margin ?? const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+      ),
+      child: child,
     );
   }
 }

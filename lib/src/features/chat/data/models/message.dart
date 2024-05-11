@@ -4,17 +4,20 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:converse/src/core/data/models/user_model.dart';
+import 'package:converse/src/features/chat/data/enums/enums.dart';
 
 class ChatMessage {
   final UserModel sender;
   final UserModel receiver;
   final String message;
+  final MessageType messageType;
   final Timestamp timeStamp;
 
   ChatMessage({
     required this.sender,
     required this.receiver,
     required this.message,
+    required this.messageType,
     required this.timeStamp,
   });
 
@@ -22,12 +25,14 @@ class ChatMessage {
     UserModel? sender,
     UserModel? receiver,
     String? message,
+    MessageType? messageType,
     Timestamp? timeStamp,
   }) {
     return ChatMessage(
       sender: sender ?? this.sender,
       receiver: receiver ?? this.receiver,
       message: message ?? this.message,
+      messageType: messageType ?? this.messageType,
       timeStamp: timeStamp ?? this.timeStamp,
     );
   }
@@ -37,17 +42,18 @@ class ChatMessage {
       'sender': sender.toMap(),
       'receiver': receiver.toMap(),
       'message': message,
+      'messageType': messageType,
       'timeStamp': timeStamp,
     };
   }
 
   factory ChatMessage.fromMap(Map<String, dynamic> map) {
     return ChatMessage(
-      sender: UserModel.fromMap(map['sender'] as Map<String, dynamic>),
-      receiver: UserModel.fromMap(map['receiver'] as Map<String, dynamic>),
-      message: map['message'] as String,
-      timeStamp: map['timeStamp'] as Timestamp,
-    );
+        sender: UserModel.fromMap(map['sender'] as Map<String, dynamic>),
+        receiver: UserModel.fromMap(map['receiver'] as Map<String, dynamic>),
+        message: map['message'] as String,
+        messageType: map['messageType'] as MessageType,
+        timeStamp: map['timeStamp'] as Timestamp);
   }
 
   String toJson() => json.encode(toMap());
@@ -57,7 +63,7 @@ class ChatMessage {
 
   @override
   String toString() {
-    return 'ChatMessage(sender: $sender, receiver: $receiver, message: $message, timeStamp: $timeStamp)';
+    return 'ChatMessage(sender: $sender, receiver: $receiver, message: $message, messageType: $messageType, timeStamp: $timeStamp)';
   }
 
   @override
@@ -67,6 +73,7 @@ class ChatMessage {
     return other.sender == sender &&
         other.receiver == receiver &&
         other.message == message &&
+        other.messageType == messageType &&
         other.timeStamp == timeStamp;
   }
 
@@ -75,6 +82,7 @@ class ChatMessage {
     return sender.hashCode ^
         receiver.hashCode ^
         message.hashCode ^
+        messageType.hashCode ^
         timeStamp.hashCode;
   }
 }
