@@ -9,3 +9,7 @@ const kDefaultError = 'Oops something went wrong!';
 const kBadRequestError = 'Bad request, please try again.';
 const kNotFoundError = 'An error occured, please try again.';
 const kRequestCancelledError = 'Request to server was cancelled.';
+
+//Message types
+const kTextType = 'TEXT';
+const kImageType = 'IMAGE';

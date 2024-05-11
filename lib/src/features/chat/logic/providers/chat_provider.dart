@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'package:converse/src/core/data/models/user_model.dart';
-import 'package:converse/src/features/chat/data/enums/enums.dart';
 import 'package:converse/src/features/chat/data/models/message.dart';
 import 'package:converse/src/features/chat/logic/providers/chat_service_provider.dart';
 import 'package:converse/src/features/chat/logic/services/chat_service.dart';
+import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +22,7 @@ class ChatProvider extends ChangeNotifier {
       {required UserModel receiver, required String message}) async {
     try {
       if (message.isNotEmpty) {
-        await chatService.sendMessage(receiver, message, MessageType.text);
+        await chatService.sendMessage(receiver, message, 'TEXT');
       }
     } catch (e) {
       log('Failed to send message:  stack:$e');
@@ -37,8 +37,7 @@ class ChatProvider extends ChangeNotifier {
         // imageQuality: 65,
       );
       if (pickedImage != null) {
-        await chatService.sendMessage(
-            receiver, pickedImage.path, MessageType.image);
+        await chatService.sendMessage(receiver, pickedImage.path, kImageType);
       }
     } catch (e) {
       log('Failed to send image:  stack:$e');

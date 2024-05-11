@@ -1,6 +1,5 @@
 import 'package:converse/src/core/data/models/user_model.dart';
 import 'package:converse/src/features/chat/logic/providers/chat_provider.dart';
-import 'package:converse/src/features/theme/data/theme.dart';
 import 'package:converse/src/shared/shared.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class UserInputView extends HookConsumerWidget {
     final theme = Theme.of(context).colorScheme;
     final focusNode = useFocusNode();
     final chatController = useTextEditingController();
-    final isEmpty = useState<bool>(false);
+    final isEmpty = useState<bool>(true);
     final emojiOffStage = useState<bool>(true);
 
     void toggleShowEmoji() {
@@ -96,6 +95,7 @@ class UserInputView extends HookConsumerWidget {
                             receiver: receiver,
                             message: chatController.text.trim());
                         chatController.clear();
+                        isEmpty.value = true;
                         scrollController.animateTo(0,
                             duration: const Duration(milliseconds: 400),
                             curve: Curves.easeOut);

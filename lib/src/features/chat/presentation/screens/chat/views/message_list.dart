@@ -45,7 +45,7 @@ class MessageListView extends ConsumerWidget {
 
             return MessageBox(
               isCurrentUser: isCurrentUser,
-              message: chat.message,
+              chat: chat,
             );
           },
         );

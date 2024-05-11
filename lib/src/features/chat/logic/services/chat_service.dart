@@ -1,10 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:converse/src/shared/shared.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:converse/src/core/data/models/user_model.dart';
-import 'package:converse/src/features/chat/data/enums/enums.dart';
 import 'package:converse/src/features/chat/data/models/message.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 
@@ -46,20 +45,20 @@ class ChatService {
   Future<void> sendMessage(
     UserModel receiver,
     String message,
-    MessageType messageType,
+    String messageType,
   ) async {
     List<String> ids = [userProvider.user.id, receiver.id];
     ids.sort();
     String chatRoomID = ids.join('_');
     String? imageUrl;
 
-    if (messageType == MessageType.image) {
+    if (messageType == kImageType) {
       imageUrl = await _uploadImage(File(message));
     }
     ChatMessage newMessage = ChatMessage(
       sender: userProvider.user,
       receiver: receiver,
-      message: messageType == MessageType.image ? imageUrl! : message,
+      message: messageType == kImageType ? imageUrl! : message,
       messageType: messageType,
       timeStamp: Timestamp.now(),
     );

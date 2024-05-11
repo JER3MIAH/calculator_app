@@ -4,13 +4,12 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:converse/src/core/data/models/user_model.dart';
-import 'package:converse/src/features/chat/data/enums/enums.dart';
 
 class ChatMessage {
   final UserModel sender;
   final UserModel receiver;
   final String message;
-  final MessageType messageType;
+  final String messageType;
   final Timestamp timeStamp;
 
   ChatMessage({
@@ -25,7 +24,7 @@ class ChatMessage {
     UserModel? sender,
     UserModel? receiver,
     String? message,
-    MessageType? messageType,
+    String? messageType,
     Timestamp? timeStamp,
   }) {
     return ChatMessage(
@@ -49,11 +48,12 @@ class ChatMessage {
 
   factory ChatMessage.fromMap(Map<String, dynamic> map) {
     return ChatMessage(
-        sender: UserModel.fromMap(map['sender'] as Map<String, dynamic>),
-        receiver: UserModel.fromMap(map['receiver'] as Map<String, dynamic>),
-        message: map['message'] as String,
-        messageType: map['messageType'] as MessageType,
-        timeStamp: map['timeStamp'] as Timestamp);
+      sender: UserModel.fromMap(map['sender'] as Map<String, dynamic>),
+      receiver: UserModel.fromMap(map['receiver'] as Map<String, dynamic>),
+      message: map['message'] as String,
+      messageType: map['messageType'] as String,
+      timeStamp: map['timeStamp'] as Timestamp,
+    );
   }
 
   String toJson() => json.encode(toMap());
