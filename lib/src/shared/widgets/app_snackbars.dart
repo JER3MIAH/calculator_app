@@ -54,4 +54,19 @@ class AppSnackBar {
       dismissDirection: DismissDirection.horizontal,
     );
   }
+
+  static simpleSnackbar(String message) {
+    Get.showSnackbar(
+      GetSnackBar(
+        snackPosition: SnackPosition.BOTTOM,
+        message: message,
+        duration: const Duration(seconds: 4),
+        icon: Icon(Icons.save, color: appColors.white),
+        dismissDirection: DismissDirection.horizontal,
+        backgroundColor: appColors.coolGrey.withOpacity(.5),
+        borderRadius: 8,
+        margin: const EdgeInsets.all(8),
+      ),
+    );
+  }
 }

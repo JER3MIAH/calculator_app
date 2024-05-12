@@ -1,8 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:converse/src/features/chat/data/models/message.dart';
+import 'package:converse/src/features/chat/logic/providers/chat_provider.dart';
 import 'package:converse/src/features/theme/logic/theme_provider.dart';
 import 'package:converse/src/shared/shared.dart';
+import 'package:converse/src/shared/widgets/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -82,14 +84,26 @@ class MessageBox extends ConsumerWidget {
                   );
                 },
                 openBuilder: (context, action) {
-                  return _buildViewImage();
+                  return _buildViewImage(
+                    onSave: () async {
+                      final isSuccessful = await ref
+                          .read(chatProvider.notifier)
+                          .saveImage(chat.message);
+                      if (isSuccessful) {
+                        AppSnackBar.simpleSnackbar('Photo saved to gallery');
+                      } else {
+                        AppSnackBar.showSnackbar(
+                            message: 'Failed to save photo');
+                      }
+                    },
+                  );
                 },
               )
       ],
     );
   }
 
-  Widget _buildViewImage() {
+  Widget _buildViewImage({VoidCallback? onSave, VoidCallback? onDelete}) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -101,6 +115,48 @@ class MessageBox extends ConsumerWidget {
         leading: BackButton(
           color: appColors.white,
         ),
+        actions: [
+          PopupMenuButton(
+            color: Colors.black.withOpacity(.7),
+            iconColor: appColors.white,
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: onSave,
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.download,
+                      color: appColors.white,
+                    ),
+                    title: Text(
+                      'Save to Gallery',
+                      style: TextStyle(
+                        color: appColors.white,
+                      ),
+                    ),
+                    // onTap: onSave,
+                  ),
+                ),
+                PopupMenuItem(
+                  onTap: onDelete,
+                  child: ListTile(
+                    leading: SvgAsset(
+                      assetName: trashIcon,
+                      color: appColors.white,
+                    ),
+                    title: Text(
+                      'Delete',
+                      style: TextStyle(
+                        color: appColors.white,
+                      ),
+                    ),
+                    // onTap: onDelete,
+                  ),
+                ),
+              ];
+            },
+          )
+        ],
       ),
       body: Center(
         child: InteractiveViewer(

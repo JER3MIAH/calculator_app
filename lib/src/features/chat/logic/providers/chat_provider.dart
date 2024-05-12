@@ -44,6 +44,15 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> saveImage(String imageUrl) async {
+    try {
+      await chatService.saveImageToGallery(imageUrl);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Stream<List<ChatMessage>> getMessages({required UserModel receiver}) {
     return chatService.getMessages(receiver);
   }
