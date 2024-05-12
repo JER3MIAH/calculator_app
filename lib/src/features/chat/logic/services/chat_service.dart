@@ -75,6 +75,11 @@ class ChatService {
         );
   }
 
+  Future<bool> checkChatExists(String chatRoomID) async {
+    final result = await _db.collection('chat_rooms').doc(chatRoomID).get();
+    return result.exists;
+  }
+
   Stream<List<ChatMessage>> getMessages(UserModel receiver) {
     List<String> ids = [userProvider.user.id, receiver.id];
     ids.sort();

@@ -31,9 +31,17 @@ class ListOfChatsView extends ConsumerWidget {
             chats.where((user) => user.email != userProv.user.email).toList();
         return ListView.builder(
           itemCount: filteredUsers.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (context, index)  {
             final user = filteredUsers[index];
-            if (user.email != userProv.user.email) {
+            List<String> ids = [userProv.user.id, user.id];
+            ids.sort();
+            // String chatRoomID = ids.join('_');
+            // bool chatExists = await ref
+            //     .read(chatProvider.notifier)
+            //     .checkChetExists(chatRoomID);
+            //TODO: Find solution
+
+            if (user.email != userProv.user.email /*&& chatExists*/) {
               return ChatTile(
                 onTap: () {
                   AppNavigator.pushNamed(

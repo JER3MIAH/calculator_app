@@ -56,4 +56,8 @@ class ChatProvider extends ChangeNotifier {
   Stream<List<ChatMessage>> getMessages({required UserModel receiver}) {
     return chatService.getMessages(receiver);
   }
+
+  Future<bool> checkChatExists(String chatRoomID) async {
+    return await chatService.checkChatExists(chatRoomID);
+  }
 }
