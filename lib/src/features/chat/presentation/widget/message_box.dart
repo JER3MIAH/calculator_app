@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:converse/src/features/chat/data/models/message.dart';
 import 'package:converse/src/features/theme/logic/theme_provider.dart';
@@ -50,30 +51,75 @@ class MessageBox extends ConsumerWidget {
                   ),
                 ),
               )
-            : Container(
-                margin:
-                    EdgeInsets.symmetric(horizontal: 15.w).copyWith(top: 5.h),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    height: 150.h,
-                    width: 200.w,
-                    imageUrl: chat.message,
-                    fit: BoxFit.fitWidth,
-                    placeholder: (_, __) => ShimmerWidget(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: appColors.coolGrey,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+            : OpenContainer(
+                closedElevation: 0,
+                openElevation: 0,
+                openColor: appColors.black,
+                closedColor: theme.onBackground,
+                closedBuilder: (context, action) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.w)
+                        .copyWith(top: 5.h),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
                         height: 150.h,
                         width: 200.w,
+                        imageUrl: chat.message,
+                        fit: BoxFit.fitWidth,
+                        placeholder: (_, __) => ShimmerWidget(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: appColors.coolGrey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 150.h,
+                            width: 200.w,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  );
+                },
+                openBuilder: (context, action) {
+                  return _buildViewImage();
+                },
+              )
       ],
+    );
+  }
+
+  Widget _buildViewImage() {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          isCurrentUser ? 'You' : chat.sender.username,
+          style: TextStyle(color: appColors.white),
+        ),
+        leading: BackButton(
+          color: appColors.white,
+        ),
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          child: CachedNetworkImage(
+            imageUrl: chat.message,
+            fit: BoxFit.fitWidth,
+            placeholder: (_, __) => ShimmerWidget(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: appColors.coolGrey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: 150.h,
+                width: 200.w,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
