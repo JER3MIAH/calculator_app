@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:converse/src/features/home/data/models/user_chat.dart';
 import 'package:converse/src/shared/shared.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,6 +19,8 @@ class ChatService {
   final _db = FirebaseFirestore.instance;
   final _firebaseStorage = FirebaseStorage.instance;
 
+  final _chatsColection = FirebaseFirestore.instance.collection('chat_rooms');
+
   Stream<List<UserModel>> getUsersStream() {
     return _db.collection('users').snapshots().map((snap) {
       return snap.docs.map((doc) {
@@ -32,16 +35,28 @@ class ChatService {
   }
 
   Stream<List<UserModel>> getChattedUsersStream() {
-    //TODO: Fix to actually return users with existing chat
-    return _db.collection('users').snapshots().map((snap) {
-      return snap.docs.map((doc) {
+    return _db.collection('users').snapshots().asyncMap((snap) async {
+      final users = <UserModel>[];
+
+      for (final doc in snap.docs) {
         final user = doc.data();
-        return UserModel(
+        final userModel = UserModel(
           id: user['id'],
           username: user['username'],
           email: user['email'],
         );
-      }).toList();
+
+        final chatRoomID =
+            generateChatId(id1: userProvider.user.id, id2: userModel.id);
+
+        final chatExists = await checkChatExists(chatRoomID);
+        if (chatExists) {
+          users.add(userModel);
+        }
+      }
+
+      return users;
+      //TODO: Needs manual refresh, Fix
     });
   }
 
@@ -50,9 +65,10 @@ class ChatService {
     String message,
     String messageType,
   ) async {
-    List<String> ids = [userProvider.user.id, receiver.id];
-    ids.sort();
-    String chatRoomID = ids.join('_');
+    String chatRoomID = generateChatId(
+      id1: userProvider.user.id,
+      id2: receiver.id,
+    );
     String? imageUrl;
 
     if (messageType == kImageType) {
@@ -65,36 +81,49 @@ class ChatService {
       messageType: messageType,
       timeStamp: Timestamp.now(),
     );
+    final docRef = _chatsColection.doc(chatRoomID);
+
     //? Add new message to database
-    await _db
-        .collection('chat_rooms')
-        .doc(chatRoomID)
-        .collection('messages')
-        .add(
+    await docRef.update({
+      'messages': FieldValue.arrayUnion(
+        [
           newMessage.toMap(),
-        );
+        ],
+      ),
+    });
+  }
+
+  Future<void> createNewChat(String id1, String id2) async {
+    String chatRoomID = generateChatId(
+      id1: id1,
+      id2: id2,
+    );
+    final docRef = _chatsColection.doc(chatRoomID);
+    final chat = UserChat(
+      id: chatRoomID,
+      participants: [id1, id2],
+      messages: [],
+    );
+    await docRef.set(chat.toMap());
   }
 
   Future<bool> checkChatExists(String chatRoomID) async {
-    final result = await _db.collection('chat_rooms').doc(chatRoomID).get();
+    final result = await _chatsColection.doc(chatRoomID).get();
     return result.exists;
   }
 
   Stream<List<ChatMessage>> getMessages(UserModel receiver) {
-    List<String> ids = [userProvider.user.id, receiver.id];
-    ids.sort();
-    String chatRoomID = ids.join('_');
+    String chatRoomID = generateChatId(
+      id1: userProvider.user.id,
+      id2: receiver.id,
+    );
 
-    return _db
-        .collection('chat_rooms')
-        .doc(chatRoomID)
-        .collection('messages')
-        .orderBy('timeStamp', descending: false)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((doc) {
-        return ChatMessage.fromMap(doc.data());
-      }).toList();
+    return _chatsColection.doc(chatRoomID).snapshots().map((snapshot) {
+      final chatData = snapshot.data() as Map<String, dynamic>;
+      final List<dynamic> messagesData = chatData['messages'] ?? [];
+      final List<ChatMessage> messages =
+          messagesData.map((data) => ChatMessage.fromMap(data)).toList();
+      return messages;
     });
   }
 

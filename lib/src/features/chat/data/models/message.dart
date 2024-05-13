@@ -1,8 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:converse/src/core/data/models/user_model.dart';
 
 class ChatMessage {
@@ -54,35 +50,5 @@ class ChatMessage {
       messageType: map['messageType'] as String,
       timeStamp: map['timeStamp'] as Timestamp,
     );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ChatMessage.fromJson(String source) =>
-      ChatMessage.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'ChatMessage(sender: $sender, receiver: $receiver, message: $message, messageType: $messageType, timeStamp: $timeStamp)';
-  }
-
-  @override
-  bool operator ==(covariant ChatMessage other) {
-    if (identical(this, other)) return true;
-
-    return other.sender == sender &&
-        other.receiver == receiver &&
-        other.message == message &&
-        other.messageType == messageType &&
-        other.timeStamp == timeStamp;
-  }
-
-  @override
-  int get hashCode {
-    return sender.hashCode ^
-        receiver.hashCode ^
-        message.hashCode ^
-        messageType.hashCode ^
-        timeStamp.hashCode;
   }
 }

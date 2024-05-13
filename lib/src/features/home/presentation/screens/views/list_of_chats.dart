@@ -17,7 +17,7 @@ class ListOfChatsView extends ConsumerWidget {
       stream: ref.watch(chatServiceProvider).getChattedUsersStream(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const Center(child: Text('Error'));
+          return Center(child: Text('Error: ${snapshot.error}'));
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -31,7 +31,7 @@ class ListOfChatsView extends ConsumerWidget {
             chats.where((user) => user.email != userProv.user.email).toList();
         return ListView.builder(
           itemCount: filteredUsers.length,
-          itemBuilder: (context, index)  {
+          itemBuilder: (context, index) {
             final user = filteredUsers[index];
             List<String> ids = [userProv.user.id, user.id];
             ids.sort();

@@ -60,4 +60,10 @@ class ChatProvider extends ChangeNotifier {
   Future<bool> checkChatExists(String chatRoomID) async {
     return await chatService.checkChatExists(chatRoomID);
   }
+
+  Future<void> createNewChat(String id1, String id2) async {
+    await chatService.createNewChat(id1, id2);
+  }
+
+  void update() => notifyListeners();
 }

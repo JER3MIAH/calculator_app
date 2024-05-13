@@ -1,7 +1,9 @@
+import 'package:converse/src/features/chat/logic/providers/chat_provider.dart';
 import 'package:converse/src/features/chat/logic/providers/chat_service_provider.dart';
 import 'package:converse/src/features/home/logic/providers/user_provider.dart';
 import 'package:converse/src/features/navigation/nav.dart';
 import 'package:converse/src/features/navigation/routes.dart';
+import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../widgets/widgets.dart';
@@ -45,7 +47,17 @@ class ListOfUsersView extends ConsumerWidget {
             final user = searchFilteredUsers[index];
             if (user.email != userProv.user.email) {
               return UserTile(
-                onTap: () {
+                onTap: () async {
+                  final chatEsists =
+                      await ref.read(chatProvider.notifier).checkChatExists(
+                            generateChatId(id1: userProv.user.id, id2: user.id),
+                          );
+                  if (!chatEsists) {
+                    await ref
+                        .read(chatProvider.notifier)
+                        .createNewChat(userProv.user.id, user.id);
+                  }
+
                   AppNavigator.popRoute();
                   AppNavigator.pushNamed(
                     ChatRoutes.chat,
