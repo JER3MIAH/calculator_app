@@ -7,7 +7,7 @@ const outlineInputBorderBase =
     UnderlineInputBorder(borderSide: BorderSide.none);
 
 ThemeData lightTheme = ThemeData(
-  textTheme: GoogleFonts.latoTextTheme().copyWith(
+  textTheme: GoogleFonts.montserratTextTheme().copyWith(
     headlineMedium: TextStyle(
       fontSize: 25.sp,
       fontWeight: FontWeight.w700,
@@ -46,7 +46,7 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
-  textTheme: GoogleFonts.latoTextTheme().copyWith(
+  textTheme: GoogleFonts.montserratTextTheme().copyWith(
     headlineMedium: TextStyle(
       fontSize: 25.sp,
       fontWeight: FontWeight.w700,

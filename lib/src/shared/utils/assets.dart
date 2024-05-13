@@ -19,6 +19,9 @@ final String sendIcon = 'sendIcon'.svg;
 final String editIcon = 'editIcon'.svg;
 
 //Jsons
+final String appIconAnimation = 'appIconAnimation'.json;
+final String noMessages = 'noMessages'.json;
+final String noChats = 'noChats'.json;
 
 // extensions
 extension ImageExtension on String {
