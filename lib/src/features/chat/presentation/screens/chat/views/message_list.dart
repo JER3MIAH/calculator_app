@@ -39,20 +39,24 @@ class MessageListView extends ConsumerWidget {
         final chats = snapshot.data ?? [];
 
         if (chats.isEmpty) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Lottie.asset('assets/jsons/noMessages.json'),
-              Text(
-                'No messages here yet...',
-                style: TextStyle(
-                  color: theme.outline,
-                  fontSize: 18.sp,
-                ),
+          return Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Lottie.asset('assets/jsons/noMessages.json'),
+                  Text(
+                    'No messages here yet...',
+                    style: TextStyle(
+                      color: theme.outline,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  YBox(80.h),
+                ],
               ),
-              YBox(80.h),
-            ],
+            ),
           );
         } else {
           return ListView.builder(

@@ -1,5 +1,6 @@
 import 'package:converse/src/features/navigation/app_navigator.dart';
 import 'package:converse/src/features/navigation/routes.dart';
+import 'package:converse/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class AppFab extends StatelessWidget {
@@ -15,6 +16,10 @@ class AppFab extends StatelessWidget {
       onPressed: () {
         AppNavigator.pushNamed(HomeRoutes.newMessage);
       },
+      child: SvgAsset(
+        assetName: editIcon,
+        color: appColors.white,
+      ),
     );
   }
 }

@@ -1,7 +1,5 @@
 const String baseSvgPath = 'assets/svgs/';
 const String basePngPath = 'assets/pngs/';
-const String baseJsonPath = 'assets/json/';
-const String baseMapStylePath = 'assets/';
 
 // app icon
 final String appIcon = 'app-icon'.png;
@@ -18,17 +16,10 @@ final String trashIcon = 'trashIcon'.svg;
 final String sendIcon = 'sendIcon'.svg;
 final String editIcon = 'editIcon'.svg;
 
-//Jsons
-final String appIconAnimation = 'appIconAnimation'.json;
-final String noMessages = 'noMessages'.json;
-final String noChats = 'noChats'.json;
-
 // extensions
 extension ImageExtension on String {
   // png paths
   String get png => '$basePngPath$this.png';
   // svgs path
   String get svg => '$baseSvgPath$this.svg';
-  //Json style
-  String get json => '$baseJsonPath$this.json';
 }

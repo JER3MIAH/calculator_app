@@ -72,15 +72,7 @@ class ListOfChatsView extends ConsumerWidget {
             itemCount: filteredUsers.length,
             itemBuilder: (context, index) {
               final user = filteredUsers[index];
-              List<String> ids = [userProv.user.id, user.id];
-              ids.sort();
-              // String chatRoomID = ids.join('_');
-              // bool chatExists = await ref
-              //     .read(chatProvider.notifier)
-              //     .checkChetExists(chatRoomID);
-              //TODO: Find solution
-
-              if (user.email != userProv.user.email /*&& chatExists*/) {
+              if (user.email != userProv.user.email) {
                 return ChatTile(
                   onTap: () {
                     AppNavigator.pushNamed(
@@ -89,6 +81,7 @@ class ListOfChatsView extends ConsumerWidget {
                     );
                   },
                   username: user.username,
+                  chatId: generateChatId(id1: userProv.user.id, id2: user.id),
                 );
               } else {
                 return const SizedBox.shrink();

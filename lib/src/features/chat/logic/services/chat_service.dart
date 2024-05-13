@@ -56,8 +56,19 @@ class ChatService {
       }
 
       return users;
-      //TODO: Needs manual refresh, Fix
     });
+  }
+
+  Stream<ChatMessage?> latestMessageStream(String chatRoomID) {
+    return _chatsColection.doc(chatRoomID).snapshots().map((snapshot) {
+      final chatData = snapshot.data() as Map<String, dynamic>;
+      final List<dynamic> messagesData = chatData['messages'] ?? [];
+      if (messagesData.isEmpty) return null;
+
+      final latestMessageData = messagesData.last;
+      final latestMessage = ChatMessage.fromMap(latestMessageData);
+      return latestMessage;
+    }).handleError((error) => log('Error fetching latest message: $error'));
   }
 
   Future<void> sendMessage(
