@@ -99,6 +99,8 @@ class MessageBox extends ConsumerWidget {
                   );
                 },
               )
+              //DateFormat.jm().format(chat.timeStamp.toDate()),
+              //TODO: use
       ],
     );
   }

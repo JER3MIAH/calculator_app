@@ -36,6 +36,7 @@ ThemeData lightTheme = ThemeData(
   ),
   colorScheme: ColorScheme.light(
     outline: appColors.black,
+    inversePrimary: appColors.white,
     primary: const Color(0xFF0088CC),
     primaryContainer: const Color(0xFF39A2DB),
     secondary: appColors.grey.withOpacity(0.3),
@@ -75,6 +76,7 @@ ThemeData darkTheme = ThemeData(
   ),
   colorScheme: ColorScheme.dark(
     outline: appColors.white,
+    inversePrimary: appColors.black,
     primary: const Color(0xFF1A2233),
     primaryContainer: const Color(0xFF39A2DB),
     background: const Color(0xFF212A3E),

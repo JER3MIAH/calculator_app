@@ -23,6 +23,10 @@ class ChatTile extends ConsumerWidget {
     final theme = Theme.of(context).colorScheme;
     final themeProv = ref.watch(themeProvider);
     final userProv = ref.watch(userProvider);
+    final subStyle = TextStyle(
+      color: appColors.coolGrey,
+      fontWeight: FontWeight.w500,
+    );
 
     return BounceInAnimation(
       child: GestureDetector(
@@ -72,21 +76,30 @@ class ChatTile extends ConsumerWidget {
                   final latestMessage = snapshot.data;
 
                   if (latestMessage != null) {
-                    return Text(
-                      '${latestMessage.sender.email == userProv.user.email ? 'you: ' : '$username: '}${latestMessage.message}',
-                      style: TextStyle(
-                        color: appColors.coolGrey,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    );
+                    final bool sentByUser =
+                        latestMessage.sender.email == userProv.user.email;
+                    if (latestMessage.messageType == kTextType) {
+                      return Text(
+                        '${sentByUser ? 'you: ' : '$username: '}${latestMessage.message}',
+                        style: subStyle,
+                      );
+                    } else {
+                      return Text.rich(
+                        TextSpan(
+                          text: sentByUser ? 'you: ' : '$username: ',
+                          style: subStyle,
+                          children: [
+                            TextSpan(
+                              text: 'Photo',
+                              style: subStyle.copyWith(
+                                  color: theme.primaryContainer),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   } else {
-                    return Text(
-                      '. . .',
-                      style: TextStyle(
-                        color: appColors.coolGrey,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    );
+                    return Text('. . .', style: subStyle);
                   }
                 }),
           ),
