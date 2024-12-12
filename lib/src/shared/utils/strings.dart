@@ -1,0 +1,1 @@
+const LeagueSpartan = 'League Spartan';
