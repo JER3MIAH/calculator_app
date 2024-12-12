@@ -1,4 +1,3 @@
-import 'package:calculator_app/src/features/theme/data/enums.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThemeEvent extends Equatable {
@@ -13,11 +12,5 @@ class GetSavedTheme extends ThemeEvent {
 }
 
 class ChangeThemeEvent extends ThemeEvent {
-  final AppTheme theme;
-  const ChangeThemeEvent({
-    required this.theme,
-  });
-
-  @override
-  List<Object> get props => [theme];
+  const ChangeThemeEvent();
 }
