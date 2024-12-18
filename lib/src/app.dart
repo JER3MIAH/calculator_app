@@ -1,3 +1,4 @@
+import 'package:calculator_app/src/features/home/data/bloc_providers.dart';
 import 'package:calculator_app/src/features/theme/data/enums.dart';
 import 'package:flutter/material.dart';
 import 'features/home/presentation/screens/home_screen.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         ...themeBlocProviders,
+        ...homeBlocProviders,
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (_, state) {
