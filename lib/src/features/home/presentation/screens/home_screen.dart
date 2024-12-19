@@ -108,6 +108,7 @@ class HomeScreen extends HookWidget {
                       children: [
                         Expanded(
                           child: TextField(
+                            focusNode: AlwaysDisabledFocusNode(),
                             controller: controller,
                             textAlign: TextAlign.end,
                             style: TextStyle(
@@ -235,4 +236,9 @@ class HomeScreen extends HookWidget {
       },
     );
   }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
