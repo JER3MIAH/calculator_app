@@ -7,12 +7,16 @@ abstract class CalculatorEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RegisterTap extends CalculatorEvent {
-  final String buttontext;
-  const RegisterTap({
-    required this.buttontext,
+class GetExpressionResult extends CalculatorEvent {
+  final String expression;
+  const GetExpressionResult({
+    required this.expression,
   });
 
   @override
-  List<Object> get props => [buttontext];
+  List<Object> get props => [expression];
+}
+
+class ResetStateEvent extends CalculatorEvent {
+  const ResetStateEvent();
 }

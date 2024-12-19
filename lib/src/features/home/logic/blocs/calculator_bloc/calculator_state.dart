@@ -1,27 +1,24 @@
 import 'package:equatable/equatable.dart';
+import 'package:calculator_app/src/features/home/data/data.dart';
 
 class CalculatorState extends Equatable {
-  final String equation;
   final String result;
-  final String expression;
+  final CalcStatus status;
   const CalculatorState({
-    this.equation = '0',
-    this.result = '0',
-    this.expression = '',
+    this.result = '',
+    this.status = CalcStatus.normal,
   });
 
   @override
-  List<Object> get props => [equation, result, expression];
+  List<Object> get props => [result, status];
 
   CalculatorState copyWith({
-    String? equation,
     String? result,
-    String? expression,
+    CalcStatus? status,
   }) {
     return CalculatorState(
-      equation: equation ?? this.equation,
       result: result ?? this.result,
-      expression: expression ?? this.expression,
+      status: status ?? this.status,
     );
   }
 }

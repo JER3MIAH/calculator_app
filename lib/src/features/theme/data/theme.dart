@@ -20,6 +20,7 @@ final theme1 = ThemeData(
     tertiary: appColors.theme1EqualsKeyBG,
     tertiaryContainer: appColors.theme1EqualsKeyHover,
     onPrimary: appColors.theme1ButtonText,
+    error: Colors.red,
   ),
 );
 
@@ -40,6 +41,7 @@ final theme2 = ThemeData(
     tertiary: appColors.theme2EqualsKeyBG,
     tertiaryContainer: appColors.theme2EqualsKeyHover,
     onPrimary: appColors.theme2ButtonText,
+    error: Colors.red,
   ),
 );
 
@@ -60,5 +62,6 @@ final theme3 = ThemeData(
     tertiary: appColors.theme3EqualsKeyBG,
     tertiaryContainer: appColors.theme3EqualsKeyHover,
     onPrimary: appColors.theme3ButtonText,
+    error: Colors.red,
   ),
 );

@@ -1,0 +1,1 @@
+enum CalcStatus { normal, error }

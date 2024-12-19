@@ -1,3 +1,4 @@
+import 'package:calculator_app/src/features/home/data/data.dart';
 import 'package:calculator_app/src/features/home/logic/blocs/blocs.dart';
 import 'package:calculator_app/src/features/theme/data/colors.dart';
 import 'package:calculator_app/src/features/theme/data/enums.dart';
@@ -5,8 +6,9 @@ import 'package:calculator_app/src/features/theme/logic/bloc/theme_state.dart';
 import 'package:calculator_app/src/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends HookWidget {
   const HomeScreen({super.key});
 
   @override
@@ -32,6 +34,9 @@ class HomeScreen extends StatelessWidget {
       '/',
       'x'
     ];
+
+    final controller = useTextEditingController();
+    final calculatorBloc = context.read<CalculatorBloc>();
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, themeState) {
@@ -98,14 +103,35 @@ class HomeScreen extends StatelessWidget {
                       color: theme.surfaceContainer,
                       borderRadius: isMobile ? null : BorderRadius.circular(10),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Column(
-                          children: [
-                            AppText(cState.equation),
-                            AppText(cState.result),
-                          ],
+                        Expanded(
+                          child: TextField(
+                            controller: controller,
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w600,
+                              color: cState.status == CalcStatus.error
+                                  ? theme.error
+                                  : null,
+                            ),
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(
+                                borderRadius: BorderRadius.zero,
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        AppText(
+                          cState.result,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: cState.status == CalcStatus.error
+                              ? theme.error
+                              : null,
                         ),
                       ],
                     ),
@@ -144,9 +170,17 @@ class HomeScreen extends StatelessWidget {
                                 textColor:
                                     item == 'DEL' ? appColors.whiteText : null,
                                 onTap: () {
-                                  context.read<CalculatorBloc>().add(
-                                        RegisterTap(buttontext: item),
-                                      );
+                                  switch (item) {
+                                    case 'DEL':
+                                      final txt = controller.text.substring(
+                                          0, controller.text.trim().length - 1);
+                                      controller.text = txt;
+                                      calculatorBloc.add(ResetStateEvent());
+                                      break;
+                                    default:
+                                      controller.text = controller.text + item;
+                                      break;
+                                  }
                                 },
                               );
                             },
@@ -162,7 +196,10 @@ class HomeScreen extends StatelessWidget {
                                 hoverColor: theme.secondaryContainer,
                                 textColor: appColors.whiteText,
                                 fontSize: fontSize,
-                                onTap: () {},
+                                onTap: () {
+                                  controller.clear();
+                                  calculatorBloc.add(ResetStateEvent());
+                                },
                               ),
                             ),
                             XBox(15),
@@ -176,7 +213,13 @@ class HomeScreen extends StatelessWidget {
                                 color: theme.tertiary,
                                 hoverColor: theme.tertiaryContainer,
                                 fontSize: fontSize,
-                                onTap: () {},
+                                onTap: () {
+                                  calculatorBloc.add(
+                                    GetExpressionResult(
+                                      expression: controller.text.trim(),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],
